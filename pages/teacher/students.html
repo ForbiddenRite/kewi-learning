@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📝</span> Exercises</a>
+                <a href="create-exercise.html" class="sidebar-link"><span class="icon">➕</span> Create Exercise</a>
+                <a href="students.html" class="sidebar-link active"><span class="icon">👥</span> Students</a>
+                <a href="reports.html" class="sidebar-link"><span class="icon">📈</span> Reports</a>
+                <a href="create-student.html" class="sidebar-link"><span class="icon">🎓</span> Add Student</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header flex-between flex-wrap gap-md">
+                <div>
+                    <h1 class="page-title">Students</h1>
+                    <p class="page-subtitle">Manage student accounts</p>
+                </div>
+                <a href="create-student.html" class="btn btn-primary">➕ Add Student</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="table" id="students-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Class</th>
+                            <th>Email</th>
+                            <th>Completed</th>
+                            <th>Avg Score</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-body"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Edit Student</h3>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="edit-fullname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="edit-email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Class</label>
+                    <input type="text" id="edit-class" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="edit-status" class="form-control">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEdit()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_TEACHER)) return;
+            renderStudents();
+        });
+
+        function renderStudents() {
+            const students = getStudents();
+            const tbody = document.getElementById("students-body");
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No students yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = students.map(s => {
+                const results = getResultsByStudent(s.id);
+                const avg = results.length
+                    ? Math.round(results.reduce((a, r) => a + r.percentage, 0) / results.length)
+                    : 0;
+                return `
+                    <tr>
+                        <td class="fw-semibold">${escapeHtml(s.fullName)}</td>
+                        <td>${escapeHtml(s.username)}</td>
+                        <td>${escapeHtml(s.className || "—")}</td>
+                        <td>${escapeHtml(s.email || "—")}</td>
+                        <td>${results.length}</td>
+                        <td>${results.length ? getScoreBadge(avg) : "—"}</td>
+                        <td><span class="badge ${s.status === 'active' ? 'badge-success' : 'badge-error'}">${s.status}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="openEdit('${s.id}')">Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="handleDelete('${s.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        window.openEdit = function(id) {
+            const s = findUserById(id);
+            if (!s) return;
+            document.getElementById("edit-id").value = s.id;
+            document.getElementById("edit-fullname").value = s.fullName || "";
+            document.getElementById("edit-email").value = s.email || "";
+            document.getElementById("edit-class").value = s.className || "";
+            document.getElementById("edit-status").value = s.status || "active";
+            document.getElementById("edit-modal").classList.add("active");
+        };
+
+        window.closeEditModal = function() {
+            document.getElementById("edit-modal").classList.remove("active");
+        };
+
+        window.saveEdit = function() {
+            const id = document.getElementById("edit-id").value;
+            try {
+                updateUser(id, {
+                    fullName: document.getElementById("edit-fullname").value.trim(),
+                    email: document.getElementById("edit-email").value.trim(),
+                    className: document.getElementById("edit-class").value.trim(),
+                    status: document.getElementById("edit-status").value
+                });
+                showToast("Student updated.", "success");
+                closeEditModal();
+                renderStudents();
+            } catch (err) {
+                showToast(err.message, "error");
+            }
+        };
+
+        window.handleDelete = function(id) {
+            if (!confirmAction("Permanently delete this student account?")) return;
+            deleteUser(id);
+            showToast("Student deleted.", "success");
+            renderStudents();
+        };
+    </script>
+</body>
+</html>

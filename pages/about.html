@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About – Kewi Learning</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <ul class="navbar-nav">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link active">About</a></li>
+                <li><a href="features.html" class="nav-link">Features</a></li>
+                <li><a href="subjects.html" class="nav-link">Subjects</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="login.html" id="nav-login-btn" class="btn btn-primary btn-sm">Login</a>
+                <a href="#" id="nav-dashboard-link" class="btn btn-outline btn-sm hidden">Dashboard</a>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm hidden">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+        <div class="page-header text-center">
+            <h1 class="page-title">About Kewi Learning</h1>
+            <p class="page-subtitle">Why the name “Kewi”? Because knowledge should be as fresh, nutritious, and delightful as a kiwi fruit.</p>
+        </div>
+
+        <section class="section">
+            <div class="grid-2" style="align-items:center;">
+                <div>
+                    <h2>Our Mission</h2>
+                    <p>Kewi Learning is an interactive online platform built for secondary students and their teachers. We believe learning should be engaging, measurable, and scalable — so new ideas can be added without rewriting everything from scratch.</p>
+                    <p>Inspired by other online learning platforms, we expand beyond English into Mathematics, Science, History and General Knowledge, while keeping a clean, student-friendly experience.</p>
+                </div>
+                <div class="card">
+                    <div class="card-body text-center" style="padding:var(--space-2xl);">
+                        <div style="font-size:5rem;">🥝</div>
+                        <h3>Grow Like a Kiwi</h3>
+                        <p class="text-muted">Small on the outside, packed with goodness inside.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Design Principles</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>🌱 Scalable</h4>
+                        <p class="text-muted">Modular architecture, CSS variables and JS constants make it easy to add new exercise types, subjects or features.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>🎨 Attractive</h4>
+                        <p class="text-muted">Kiwi-inspired colour palette, smooth interactions and clear visual hierarchy keep students engaged.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>📐 Clean Code</h4>
+                        <p class="text-muted">No magic numbers. All static values live in constants and :root so global adjustments are one-line changes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Who It’s For</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header"><h3>Teachers</h3></div>
+                    <div class="card-body">
+                        <ul style="list-style:disc;padding-left:var(--space-lg);">
+                            <li>Create exercises (reading, MCQ, fill-blank, true/false…)</li>
+                            <li>Manage student accounts</li>
+                            <li>View performance reports and completion status</li>
+                            <li>Monitor class progress at a glance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Students</h3></div>
+                    <div class="card-body">
+                        <ul style="list-style:disc;padding-left:var(--space-lg);">
+                            <li>Browse available exercises by subject & difficulty</li>
+                            <li>Complete exercises with a focused, one-attempt design</li>
+                            <li>See instant scores and detailed feedback</li>
+                            <li>Compare progress on leaderboards</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="border:none;padding-top:0;">
+                &copy; 2026 Kewi Learning. Built for educational purposes. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/constants.js"></script>
+    <script src="../data/users.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/utils.js"></script>
+</body>
+</html>

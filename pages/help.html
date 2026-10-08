@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Centre – Kewi Learning</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <a href="../index.html" class="btn btn-ghost btn-sm">Home</a>
+                <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <main class="container" style="padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+        <h1 class="page-title">Help Centre</h1>
+        <div class="grid-2 mt-xl">
+            <div class="card">
+                <div class="card-header"><h3>For Students</h3></div>
+                <div class="card-body">
+                    <ol style="padding-left:var(--space-lg);list-style:decimal;">
+                        <li class="mb-sm">Log in with the credentials provided by your teacher.</li>
+                        <li class="mb-sm">Browse available exercises on your dashboard.</li>
+                        <li class="mb-sm">Select an exercise and complete all questions.</li>
+                        <li class="mb-sm">Submit once — you cannot change answers afterwards.</li>
+                        <li class="mb-sm">View your score and check the leaderboard.</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3>For Teachers</h3></div>
+                <div class="card-body">
+                    <ol style="padding-left:var(--space-lg);list-style:decimal;">
+                        <li class="mb-sm">Log in with your teacher account.</li>
+                        <li class="mb-sm">Create new exercises with the exercise builder.</li>
+                        <li class="mb-sm">Add or manage student accounts.</li>
+                        <li class="mb-sm">Review performance reports and completion status.</li>
+                        <li class="mb-sm">Monitor class progress from the dashboard.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="mt-xl">
+            <a href="faq.html" class="btn btn-outline">View FAQ</a>
+            <a href="contact.html" class="btn btn-primary">Contact Support</a>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="border:none;padding-top:0;">
+                &copy; 2026 Kewi Learning. Built for educational purposes. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/constants.js"></script>
+    <script src="../js/utils.js"></script>
+</body>
+</html>

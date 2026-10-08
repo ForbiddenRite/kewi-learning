@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Kewi Learning</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .login-page {
+            min-height: calc(100vh - var(--header-height));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-xl);
+            background: linear-gradient(160deg, var(--color-bg) 0%, var(--color-accent) 100%);
+        }
+        .login-card {
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 420px;
+            overflow: hidden;
+        }
+        .login-header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            color: white;
+            padding: var(--space-xl);
+            text-align: center;
+        }
+        .login-header h1 {
+            color: white;
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-2xl);
+        }
+        .login-body {
+            padding: var(--space-xl);
+        }
+        .demo-accounts {
+            background: var(--color-bg-alt);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-top: var(--space-lg);
+            font-size: var(--font-size-sm);
+        }
+        .demo-accounts h4 {
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-sm);
+        }
+        .demo-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-xs);
+        }
+        .role-tabs {
+            display: flex;
+            margin-bottom: var(--space-lg);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+        }
+        .role-tab {
+            flex: 1;
+            padding: var(--space-md);
+            text-align: center;
+            cursor: pointer;
+            background: var(--color-bg-alt);
+            font-weight: var(--font-weight-semibold);
+            border: none;
+            transition: all var(--transition-fast);
+        }
+        .role-tab.active {
+            background: var(--color-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../index.html" class="navbar-brand">
+                <span class="logo-icon" aria-hidden="true">🥝</span>
+                <span>Kewi Learning</span>
+            </a>
+            <div class="navbar-actions">
+                <a href="../index.html" class="btn btn-ghost btn-sm">← Home</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-header">
+                <div style="font-size:3rem;margin-bottom:var(--space-sm);">🥝</div>
+                <h1>Welcome Back</h1>
+                <p style="opacity:0.9;margin:0;">Sign in to continue learning</p>
+            </div>
+            <div class="login-body">
+                <div class="role-tabs">
+                    <button class="role-tab active" data-role="student" id="tab-student">Student</button>
+                    <button class="role-tab" data-role="teacher" id="tab-teacher">Teacher</button>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your username" required autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+                    </div>
+                    <div id="login-error" class="alert alert-error hidden"></div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
+                </form>
+
+                <div class="demo-accounts">
+                    <h4>Demo Accounts</h4>
+                    <div class="demo-row">
+                        <span><strong>Teacher:</strong> teacher</span>
+                        <span>teacher123</span>
+                    </div>
+                    <div class="demo-row">
+                        <span><strong>Student:</strong> student1</span>
+                        <span>student123</span>
+                    </div>
+                    <p class="text-muted mt-sm" style="margin:0;font-size:0.75rem;">Click a role tab, then use the credentials above.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/constants.js"></script>
+    <script src="../data/users.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/utils.js"></script>
+    <script>
+        // If already logged in, redirect
+        document.addEventListener("DOMContentLoaded", () => {
+            const user = getCurrentUser();
+            if (user) {
+                redirectToDashboard(user);
+                return;
+            }
+
+            // Role tabs (visual only – actual role comes from account)
+            document.querySelectorAll(".role-tab").forEach(tab => {
+                tab.addEventListener("click", () => {
+                    document.querySelectorAll(".role-tab").forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                    // Prefill demo credentials
+                    if (tab.dataset.role === "teacher") {
+                        document.getElementById("username").value = DEMO_TEACHER_USERNAME;
+                        document.getElementById("password").value = DEMO_TEACHER_PASSWORD;
+                    } else {
+                        document.getElementById("username").value = DEMO_STUDENT_USERNAME;
+                        document.getElementById("password").value = DEMO_STUDENT_PASSWORD;
+                    }
+                });
+            });
+
+            // Default prefill student
+            document.getElementById("username").value = DEMO_STUDENT_USERNAME;
+            document.getElementById("password").value = DEMO_STUDENT_PASSWORD;
+
+            document.getElementById("login-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const errorEl = document.getElementById("login-error");
+                errorEl.classList.add("hidden");
+
+                const result = login(username, password);
+                if (result.success) {
+                    showToast("Login successful! Redirecting...", "success");
+                    setTimeout(() => redirectToDashboard(result.user), 600);
+                } else {
+                    errorEl.textContent = result.error;
+                    errorEl.classList.remove("hidden");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Results – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">🏠</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📚</span> Exercises</a>
+                <a href="results.html" class="sidebar-link active"><span class="icon">📊</span> My Results</a>
+                <a href="leaderboard.html" class="sidebar-link"><span class="icon">🏆</span> Leaderboard</a>
+                <a href="profile.html" class="sidebar-link"><span class="icon">👤</span> Profile</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">My Results</h1>
+                <p class="page-subtitle">Review your completed exercises and scores</p>
+            </div>
+            <div id="results-list"></div>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_STUDENT)) return;
+            const user = getCurrentUser();
+            const results = getResultsByStudent(user.id).sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+            const container = document.getElementById("results-list");
+            if (!results.length) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>No results yet. Complete an exercise to see your scores!</p><a href="exercises.html" class="btn btn-primary mt-md">Browse Exercises</a></div>';
+                return;
+            }
+            container.innerHTML = `
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Exercise</th>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Percentage</th>
+                                <th>Correct</th>
+                                <th>Submitted</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${results.map(r => {
+                                const ex = findExerciseById(r.exerciseId);
+                                return `<tr>
+                                    <td class="fw-semibold">${escapeHtml(ex ? ex.title : "—")}</td>
+                                    <td>${ex ? getSubjectBadge(ex.subject) : "—"}</td>
+                                    <td>${r.score} / ${r.maxScore}</td>
+                                    <td>${getScoreBadge(r.percentage)}</td>
+                                    <td>${r.correctCount} / ${r.totalQuestions}</td>
+                                    <td>${formatDateTime(r.submittedAt)}</td>
+                                    <td><a href="result-detail.html?id=${r.id}" class="btn btn-sm btn-outline">Details</a></td>
+                                </tr>`;
+                            }).join("")}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

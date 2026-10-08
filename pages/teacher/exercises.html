@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Exercises – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link active"><span class="icon">📝</span> Exercises</a>
+                <a href="create-exercise.html" class="sidebar-link"><span class="icon">➕</span> Create Exercise</a>
+                <a href="students.html" class="sidebar-link"><span class="icon">👥</span> Students</a>
+                <a href="reports.html" class="sidebar-link"><span class="icon">📈</span> Reports</a>
+                <a href="create-student.html" class="sidebar-link"><span class="icon">🎓</span> Add Student</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header flex-between flex-wrap gap-md">
+                <div>
+                    <h1 class="page-title">Exercises</h1>
+                    <p class="page-subtitle">Manage all learning exercises</p>
+                </div>
+                <a href="create-exercise.html" class="btn btn-primary">➕ Create New</a>
+            </div>
+
+            <div class="card mb-lg">
+                <div class="card-body flex gap-md flex-wrap">
+                    <input type="text" id="search-input" class="form-control" placeholder="Search by title..." style="max-width:240px;">
+                    <select id="filter-subject" class="form-control" style="min-width:180px; max-width:240px;">
+                        <option value="">All Subjects</option>
+                    </select>
+                    <select id="filter-type" class="form-control" style="min-width:180px; max-width:240px;">
+                        <option value="">All Exercise Types</option>
+                    </select>
+                    <select id="filter-difficulty" class="form-control" style="max-width:140px;">
+                        <option value="">All Difficulties</option>
+                    </select>
+                    <select id="filter-status" class="form-control" style="max-width:160px;">
+                        <option value="">All Status</option>
+                        <option value="active">Enabled</option>
+                        <option value="inactive">Disabled</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="exercises-list" class="grid-2"></div>
+        </main>
+    </div>
+
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_TEACHER)) return;
+
+            // Populate filters
+            const subSelect = document.getElementById("filter-subject");
+            Object.entries(SUBJECTS).forEach(([k, v]) => {
+                subSelect.innerHTML += `<option value="${k}">${v}</option>`;
+            });
+            const typeSelect = document.getElementById("filter-type");
+            Object.entries(EXERCISE_TYPES).forEach(([k, v]) => {
+                typeSelect.innerHTML += `<option value="${k}">${v}</option>`;
+            });
+            const diffSelect = document.getElementById("filter-difficulty");
+            Object.entries(DIFFICULTIES).forEach(([k, v]) => {
+                diffSelect.innerHTML += `<option value="${k}">${v}</option>`;
+            });
+
+            function render() {
+                const search = document.getElementById("search-input").value.toLowerCase();
+                const subject = document.getElementById("filter-subject").value;
+                const type = document.getElementById("filter-type").value;
+                const difficulty = document.getElementById("filter-difficulty").value;
+                const status = document.getElementById("filter-status").value;
+
+                // Teachers see all exercises (enabled + disabled); students only see active via getActiveExercises()
+                let list = getExercises();
+                if (search) list = list.filter(e => e.title.toLowerCase().includes(search));
+                if (subject) list = list.filter(e => e.subject === subject);
+                if (type) list = list.filter(e => e.type === type);
+                if (difficulty) list = list.filter(e => e.difficulty === difficulty);
+                if (status) list = list.filter(e => e.status === status);
+
+                const container = document.getElementById("exercises-list");
+                if (list.length === 0) {
+                    container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-state-icon">📝</div><p>No exercises found.</p></div>';
+                    return;
+                }
+                container.innerHTML = list.map(ex => {
+                    const results = getResultsByExercise(ex.id);
+                    const maxScore = getExerciseMaxScore(ex);
+                    const isActive = ex.status === STATUS_ACTIVE;
+                    const statusBadge = isActive
+                        ? '<span class="badge badge-success">Enabled</span>'
+                        : '<span class="badge badge-error">Disabled</span>';
+                    const toggleBtn = isActive
+                        ? `<button class="btn btn-sm btn-outline" onclick="handleToggleEnabled('${ex.id}', false)" title="Hide from students (e.g. in-class test)">Disable</button>`
+                        : `<button class="btn btn-sm btn-secondary" onclick="handleToggleEnabled('${ex.id}', true)" title="Make available to students">Enable</button>`;
+                    return `
+                        <div class="exercise-card" style="${isActive ? '' : 'opacity:0.75;'}">
+                            <div class="exercise-card-header">
+                                <span class="exercise-header-left">${getTypeBadge(ex.type)}</span>
+                                <span class="exercise-header-right">
+                                    ${getDifficultyBadge(ex.difficulty)}
+                                    ${statusBadge}
+                                </span>
+                            </div>
+                            <div class="exercise-card-body">
+                                <h3 class="card-title">${escapeHtml(ex.title)}</h3>
+                                <p class="text-muted text-sm">${escapeHtml(truncate(ex.description, 80))}</p>
+                                <div class="exercise-meta">
+                                    ${getSubjectBadge(ex.subject)}
+                                    <span class="badge badge-info">${(ex.questions||[]).length} Qs</span>
+                                    <span class="badge badge-primary">${maxScore} pts</span>
+                                </div>
+                            </div>
+                            <div class="exercise-card-footer">
+                                <span class="text-sm text-muted">${results.length} submission(s)</span>
+                                <div class="flex gap-sm flex-wrap">
+                                    <a href="exercise-detail.html?id=${ex.id}" class="btn btn-sm btn-outline">View</a>
+                                    ${toggleBtn}
+                                    <button class="btn btn-sm btn-danger" onclick="handleDelete('${ex.id}')" title="Permanently remove this exercise">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            }
+
+            window.handleToggleEnabled = function(id, enabled) {
+                const msg = enabled
+                    ? "Enable this exercise? Students will be able to see and attempt it."
+                    : "Disable this exercise? Students will no longer see or attempt it (e.g. for an in-class test).";
+                if (!confirmAction(msg)) return;
+                setExerciseEnabled(id, enabled);
+                showToast(enabled ? "Exercise enabled for students." : "Exercise disabled for students.", "success");
+                render();
+            };
+
+            window.handleDelete = function(id) {
+                if (!confirmAction("Permanently delete this exercise? This cannot be undone. (Use Disable if you only want to hide it from students.)")) return;
+                deleteExercise(id);
+                showToast("Exercise deleted permanently.", "success");
+                render();
+            };
+
+            document.getElementById("search-input").addEventListener("input", debounce(render));
+            document.getElementById("filter-subject").addEventListener("change", render);
+            document.getElementById("filter-type").addEventListener("change", render);
+            document.getElementById("filter-difficulty").addEventListener("change", render);
+            document.getElementById("filter-status").addEventListener("change", render);
+            render();
+        });
+    </script>
+</body>
+</html>

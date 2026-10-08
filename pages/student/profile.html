@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">🏠</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📚</span> Exercises</a>
+                <a href="results.html" class="sidebar-link"><span class="icon">📊</span> My Results</a>
+                <a href="leaderboard.html" class="sidebar-link"><span class="icon">🏆</span> Leaderboard</a>
+                <a href="profile.html" class="sidebar-link active"><span class="icon">👤</span> Profile</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">My Profile</h1>
+            </div>
+            <div class="card" style="max-width:500px;" id="profile-card">
+                <div class="card-body text-center">
+                    <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--color-secondary),var(--color-primary));display:flex;align-items:center;justify-content:center;margin:0 auto var(--space-lg);font-size:2rem;color:white;" id="avatar">?</div>
+                    <h2 id="p-name">—</h2>
+                    <p class="text-muted" id="p-username">—</p>
+                    <div class="mt-lg text-left">
+                        <div class="mb-md"><strong>Email:</strong> <span id="p-email">—</span></div>
+                        <div class="mb-md"><strong>Class:</strong> <span id="p-class">—</span></div>
+                        <div class="mb-md"><strong>Role:</strong> <span id="p-role">Student</span></div>
+                        <div class="mb-md"><strong>Member since:</strong> <span id="p-since">—</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_STUDENT)) return;
+            const user = getCurrentUser();
+            document.getElementById("p-name").textContent = user.fullName || user.username;
+            document.getElementById("p-username").textContent = "@" + user.username;
+            document.getElementById("p-email").textContent = user.email || "—";
+            document.getElementById("p-class").textContent = user.className || "—";
+            document.getElementById("p-since").textContent = formatDate(user.createdAt);
+            document.getElementById("avatar").textContent = (user.fullName || user.username).charAt(0).toUpperCase();
+        });
+    </script>
+</body>
+</html>

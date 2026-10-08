@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Exercises – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">🏠</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link active"><span class="icon">📚</span> Exercises</a>
+                <a href="results.html" class="sidebar-link"><span class="icon">📊</span> My Results</a>
+                <a href="leaderboard.html" class="sidebar-link"><span class="icon">🏆</span> Leaderboard</a>
+                <a href="profile.html" class="sidebar-link"><span class="icon">👤</span> Profile</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Browse Exercises</h1>
+                <p class="page-subtitle">Choose an exercise to complete. Remember — only one attempt each!</p>
+            </div>
+            <div class="card mb-lg">
+                <div class="card-body flex gap-md flex-wrap">
+                    <input type="text" id="search-input" class="form-control" placeholder="Search..." style="max-width:220px;">
+                    <select id="filter-subject" class="form-control" style="min-width:180px; max-width:240px;"><option value="">All Subjects</option></select>
+                    <select id="filter-type" class="form-control" style="min-width:180px; max-width:240px;"><option value="">All Exercise Types</option></select>
+                    <select id="filter-status" class="form-control" style="max-width:160px;">
+                        <option value="">All Status</option>
+                        <option value="available">Available</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+            <div id="list" class="grid-2"></div>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_STUDENT)) return;
+            const user = getCurrentUser();
+            Object.entries(SUBJECTS).forEach(([k,v]) => {
+                document.getElementById("filter-subject").innerHTML += `<option value="${k}">${v}</option>`;
+            });
+            Object.entries(EXERCISE_TYPES).forEach(([k,v]) => {
+                document.getElementById("filter-type").innerHTML += `<option value="${k}">${v}</option>`;
+            });
+
+            function render() {
+                const search = document.getElementById("search-input").value.toLowerCase();
+                const subject = document.getElementById("filter-subject").value;
+                const type = document.getElementById("filter-type").value;
+                const status = document.getElementById("filter-status").value;
+                const myResults = getResultsByStudent(user.id);
+                const completedMap = {};
+                myResults.forEach(r => completedMap[r.exerciseId] = r);
+
+                let list = getActiveExercises();
+                if (search) list = list.filter(e => e.title.toLowerCase().includes(search));
+                if (subject) list = list.filter(e => e.subject === subject);
+                if (type) list = list.filter(e => e.type === type);
+                if (status === "available") list = list.filter(e => !completedMap[e.id]);
+                if (status === "completed") list = list.filter(e => completedMap[e.id]);
+
+                const container = document.getElementById("list");
+                if (!list.length) {
+                    container.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><div class="empty-state-icon">📚</div><p>No exercises match your filters.</p></div>';
+                    return;
+                }
+                container.innerHTML = list.map(ex => {
+                    const done = completedMap[ex.id];
+                    return `
+                        <div class="exercise-card ${done ? '' : 'card-interactive'}">
+                            <div class="exercise-card-header">
+                                ${getSubjectBadge(ex.subject)}
+                                ${getDifficultyBadge(ex.difficulty)}
+                            </div>
+                            <div class="exercise-card-body">
+                                <h3 class="card-title">${escapeHtml(ex.title)}</h3>
+                                <p class="text-sm text-muted">${escapeHtml(truncate(ex.description, 80))}</p>
+                                <div class="exercise-meta">
+                                    ${getTypeBadge(ex.type)}
+                                    <span class="badge badge-info">${(ex.questions||[]).length} Qs</span>
+                                </div>
+                            </div>
+                            <div class="exercise-card-footer">
+                                ${done
+                                    ? `<span>${getScoreBadge(done.percentage)} Completed</span>
+                                       <a href="results.html" class="btn btn-sm btn-outline">View Score</a>`
+                                    : `<span class="text-sm text-muted">One attempt only</span>
+                                       <a href="take-exercise.html?id=${ex.id}" class="btn btn-sm btn-primary">Start →</a>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            }
+            document.getElementById("search-input").addEventListener("input", debounce(render));
+            document.getElementById("filter-subject").addEventListener("change", render);
+            document.getElementById("filter-type").addEventListener("change", render);
+            document.getElementById("filter-status").addEventListener("change", render);
+            render();
+        });
+    </script>
+</body>
+</html>

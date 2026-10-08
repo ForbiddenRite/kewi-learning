@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📝</span> Exercises</a>
+                <a href="create-exercise.html" class="sidebar-link"><span class="icon">➕</span> Create Exercise</a>
+                <a href="students.html" class="sidebar-link"><span class="icon">👥</span> Students</a>
+                <a href="reports.html" class="sidebar-link"><span class="icon">📈</span> Reports</a>
+                <a href="create-student.html" class="sidebar-link active"><span class="icon">🎓</span> Add Student</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Add New Student</h1>
+                <p class="page-subtitle">Create a student account</p>
+            </div>
+            <form id="create-form" class="card" style="max-width:560px;">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label" for="fullname">Full Name *</label>
+                        <input type="text" id="fullname" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username *</label>
+                        <input type="text" id="username" class="form-control" required minlength="3" maxlength="30">
+                        <div class="form-hint">Must be unique. Letters, numbers, no spaces.</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password *</label>
+                        <input type="password" id="password" class="form-control" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input type="email" id="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="classname">Class / Form</label>
+                        <input type="text" id="classname" class="form-control" placeholder="e.g. Form 3A">
+                    </div>
+                </div>
+                <div class="card-footer flex gap-md">
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                    <a href="students.html" class="btn btn-ghost">Cancel</a>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_TEACHER)) return;
+            document.getElementById("create-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                try {
+                    createUser({
+                        fullName: document.getElementById("fullname").value.trim(),
+                        username: document.getElementById("username").value.trim(),
+                        password: document.getElementById("password").value,
+                        email: document.getElementById("email").value.trim(),
+                        className: document.getElementById("classname").value.trim(),
+                        role: ROLE_STUDENT
+                    });
+                    showToast("Student account created!", "success");
+                    setTimeout(() => window.location.href = "students.html", 800);
+                } catch (err) {
+                    showToast(err.message || "Failed to create account.", "error");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

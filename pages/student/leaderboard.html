@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">🏠</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📚</span> Exercises</a>
+                <a href="results.html" class="sidebar-link"><span class="icon">📊</span> My Results</a>
+                <a href="leaderboard.html" class="sidebar-link active"><span class="icon">🏆</span> Leaderboard</a>
+                <a href="profile.html" class="sidebar-link"><span class="icon">👤</span> Profile</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Leaderboard</h1>
+                <p class="page-subtitle">See how you compare with classmates</p>
+            </div>
+
+            <div class="card mb-xl">
+                <div class="card-header"><h3>Overall Rankings</h3></div>
+                <div class="card-body">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr><th>Rank</th><th>Student</th><th>Avg Score</th><th>Completed</th><th>Total Points</th></tr>
+                            </thead>
+                            <tbody id="overall-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h3>By Exercise</h3></div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Select Exercise</label>
+                        <select id="ex-select" class="form-control" style="max-width:400px;"></select>
+                    </div>
+                    <div class="table-wrapper mt-md">
+                        <table class="table">
+                            <thead>
+                                <tr><th>Rank</th><th>Student</th><th>Score</th><th>%</th><th>Submitted</th></tr>
+                            </thead>
+                            <tbody id="ex-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_STUDENT)) return;
+            const currentUser = getCurrentUser();
+
+            // Overall
+            const overall = getOverallLeaderboard();
+            document.getElementById("overall-body").innerHTML = overall.map(item => {
+                const s = findUserById(item.studentId);
+                const isMe = item.studentId === currentUser.id;
+                return `<tr style="${isMe ? 'background:var(--color-accent);' : ''}">
+                    <td><strong>#${item.rank}</strong></td>
+                    <td>${escapeHtml(s ? s.fullName : "Unknown")}${isMe ? ' <span class="badge badge-primary">You</span>' : ''}</td>
+                    <td>${getScoreBadge(item.avgPercentage)}</td>
+                    <td>${item.completedCount}</td>
+                    <td>${item.totalScore}</td>
+                </tr>`;
+            }).join("") || '<tr><td colspan="5" class="text-center text-muted">No data yet.</td></tr>';
+
+            // By exercise
+            const exercises = getActiveExercises();
+            const select = document.getElementById("ex-select");
+            exercises.forEach(ex => {
+                select.innerHTML += `<option value="${ex.id}">${escapeHtml(ex.title)}</option>`;
+            });
+
+            function loadExBoard() {
+                const exId = select.value;
+                if (!exId) return;
+                const board = getExerciseLeaderboard(exId);
+                document.getElementById("ex-body").innerHTML = board.map(item => {
+                    const s = findUserById(item.studentId);
+                    const isMe = item.studentId === currentUser.id;
+                    return `<tr style="${isMe ? 'background:var(--color-accent);' : ''}">
+                        <td><strong>#${item.rank}</strong></td>
+                        <td>${escapeHtml(s ? s.fullName : "Unknown")}${isMe ? ' <span class="badge badge-primary">You</span>' : ''}</td>
+                        <td>${item.score}/${item.maxScore}</td>
+                        <td>${getScoreBadge(item.percentage)}</td>
+                        <td>${formatDate(item.submittedAt)}</td>
+                    </tr>`;
+                }).join("") || '<tr><td colspan="5" class="text-center text-muted">No submissions for this exercise.</td></tr>';
+            }
+            select.addEventListener("change", loadExBoard);
+            if (exercises.length) loadExBoard();
+        });
+    </script>
+</body>
+</html>

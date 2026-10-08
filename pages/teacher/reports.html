@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📝</span> Exercises</a>
+                <a href="create-exercise.html" class="sidebar-link"><span class="icon">➕</span> Create Exercise</a>
+                <a href="students.html" class="sidebar-link"><span class="icon">👥</span> Students</a>
+                <a href="reports.html" class="sidebar-link active"><span class="icon">📈</span> Reports</a>
+                <a href="create-student.html" class="sidebar-link"><span class="icon">🎓</span> Add Student</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Performance Reports</h1>
+                <p class="page-subtitle">Track student progress and exercise completion</p>
+            </div>
+
+            <div class="card mb-xl">
+                <div class="card-header"><h3>By Exercise</h3></div>
+                <div class="card-body">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Subject</th>
+                                    <th>Submissions</th>
+                                    <th>Avg Score</th>
+                                    <th>Completion</th>
+                                </tr>
+                            </thead>
+                            <tbody id="by-exercise-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h3>All Submissions</h3></div>
+                <div class="card-body">
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Exercise</th>
+                                    <th>Score</th>
+                                    <th>Percentage</th>
+                                    <th>Submitted</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-results-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_TEACHER)) return;
+
+            const exercises = getActiveExercises();
+            const students = getStudents();
+            const totalStudents = students.length;
+
+            const byExBody = document.getElementById("by-exercise-body");
+            byExBody.innerHTML = exercises.map(ex => {
+                const results = getResultsByExercise(ex.id);
+                const avg = results.length
+                    ? Math.round(results.reduce((s, r) => s + r.percentage, 0) / results.length)
+                    : 0;
+                const completion = totalStudents > 0 ? Math.round((results.length / totalStudents) * 100) : 0;
+                return `
+                    <tr>
+                        <td class="fw-semibold">${escapeHtml(ex.title)}</td>
+                        <td>${getSubjectBadge(ex.subject)}</td>
+                        <td>${results.length}</td>
+                        <td>${results.length ? getScoreBadge(avg) : "—"}</td>
+                        <td>
+                            <div class="flex-center gap-sm">
+                                <div class="progress" style="width:80px;"><div class="progress-bar" style="width:${completion}%"></div></div>
+                                <span class="text-sm">${completion}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join("") || '<tr><td colspan="5" class="text-center text-muted">No exercises.</td></tr>';
+
+            const results = getResults().slice().sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+            const allBody = document.getElementById("all-results-body");
+            allBody.innerHTML = results.map(r => {
+                const student = findUserById(r.studentId);
+                const exercise = findExerciseById(r.exerciseId);
+                return `
+                    <tr>
+                        <td>${escapeHtml(student ? student.fullName : "Unknown")}</td>
+                        <td>${escapeHtml(exercise ? exercise.title : "—")}</td>
+                        <td>${r.score} / ${r.maxScore}</td>
+                        <td>${getScoreBadge(r.percentage)}</td>
+                        <td>${formatDateTime(r.submittedAt)}</td>
+                    </tr>
+                `;
+            }).join("") || '<tr><td colspan="5" class="text-center text-muted">No submissions yet.</td></tr>';
+        });
+    </script>
+</body>
+</html>

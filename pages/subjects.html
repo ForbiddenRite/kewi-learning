@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects – Kewi Learning</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <ul class="navbar-nav">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="features.html" class="nav-link">Features</a></li>
+                <li><a href="subjects.html" class="nav-link active">Subjects</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="login.html" id="nav-login-btn" class="btn btn-primary btn-sm">Login</a>
+                <a href="#" id="nav-dashboard-link" class="btn btn-outline btn-sm hidden">Dashboard</a>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm hidden">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <main class="container" style="padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+        <div class="page-header text-center">
+            <h1 class="page-title">Subjects</h1>
+            <p class="page-subtitle">Kewi Learning covers a growing range of topics beyond English.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card card-interactive">
+                <div class="card-body text-center">
+                    <div style="font-size:3rem;">📖</div>
+                    <h3>English</h3>
+                    <p class="text-muted">Reading comprehension, vocabulary building, and language skills inspired by programmes like English Builder.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body text-center">
+                    <div style="font-size:3rem;">🔢</div>
+                    <h3>Mathematics</h3>
+                    <p class="text-muted">Algebra, fractions, decimals and problem-solving exercises for secondary learners.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body text-center">
+                    <div style="font-size:3rem;">🔬</div>
+                    <h3>Science</h3>
+                    <p class="text-muted">Biology (photosynthesis), Earth science (water cycle) and more scientific concepts.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body text-center">
+                    <div style="font-size:3rem;">🏛️</div>
+                    <h3>History</h3>
+                    <p class="text-muted">Ancient civilizations, key historical events and knowledge-building quizzes.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body text-center">
+                    <div style="font-size:3rem;">🌍</div>
+                    <h3>General Knowledge</h3>
+                    <p class="text-muted">Trivia and broad knowledge rounds that spark curiosity about the world.</p>
+                </div>
+            </div>
+            <div class="card card-interactive" style="border:2px dashed var(--color-secondary);">
+                <div class="card-body text-center">
+                    <div style="font-size:3rem;">➕</div>
+                    <h3>More Coming</h3>
+                    <p class="text-muted">The platform is designed to scale — new subjects and exercise types can be added easily.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="border:none;padding-top:0;">
+                &copy; 2026 Kewi Learning. Built for educational purposes. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/constants.js"></script>
+    <script src="../data/users.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/utils.js"></script>
+</body>
+</html>

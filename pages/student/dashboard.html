@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link active"><span class="icon">🏠</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📚</span> Exercises</a>
+                <a href="results.html" class="sidebar-link"><span class="icon">📊</span> My Results</a>
+                <a href="leaderboard.html" class="sidebar-link"><span class="icon">🏆</span> Leaderboard</a>
+                <a href="profile.html" class="sidebar-link"><span class="icon">👤</span> Profile</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Hello, <span id="welcome-name">Student</span>!</h1>
+                <p class="page-subtitle">Ready to grow your knowledge today?</p>
+            </div>
+
+            <div class="grid-3 mb-xl" id="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div>
+                        <div class="stat-value" id="stat-available">0</div>
+                        <div class="stat-label">Available</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div>
+                        <div class="stat-value" id="stat-completed">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div>
+                        <div class="stat-value" id="stat-avg">—</div>
+                        <div class="stat-label">Avg Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-xl">
+                <div class="card-header flex-between">
+                    <h3>Continue Learning</h3>
+                    <a href="exercises.html" class="btn btn-sm btn-outline">Browse All</a>
+                </div>
+                <div class="card-body">
+                    <div id="available-list" class="grid-2"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header flex-between">
+                    <h3>Recent Results</h3>
+                    <a href="results.html" class="btn btn-sm btn-outline">View All</a>
+                </div>
+                <div class="card-body" id="recent-results"></div>
+            </div>
+        </main>
+    </div>
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_STUDENT)) return;
+            const user = getCurrentUser();
+            document.getElementById("welcome-name").textContent = user.fullName || user.username;
+
+            const allEx = getActiveExercises();
+            const myResults = getResultsByStudent(user.id);
+            const completedIds = new Set(myResults.map(r => r.exerciseId));
+            const available = allEx.filter(e => !completedIds.has(e.id));
+
+            document.getElementById("stat-available").textContent = available.length;
+            document.getElementById("stat-completed").textContent = myResults.length;
+            if (myResults.length) {
+                const avg = Math.round(myResults.reduce((s,r) => s + r.percentage, 0) / myResults.length);
+                document.getElementById("stat-avg").textContent = avg + "%";
+            }
+
+            const list = document.getElementById("available-list");
+            if (available.length === 0) {
+                list.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><p>All exercises completed! 🎉</p></div>';
+            } else {
+                list.innerHTML = available.slice(0, 4).map(ex => `
+                    <div class="exercise-card">
+                        <div class="exercise-card-header">
+                            ${getSubjectBadge(ex.subject)}
+                            ${getDifficultyBadge(ex.difficulty)}
+                        </div>
+                        <div class="exercise-card-body">
+                            <h4>${escapeHtml(ex.title)}</h4>
+                            <p class="text-sm text-muted">${escapeHtml(truncate(ex.description, 60))}</p>
+                        </div>
+                        <div class="exercise-card-footer">
+                            <span class="text-sm">${(ex.questions||[]).length} questions</span>
+                            <a href="take-exercise.html?id=${ex.id}" class="btn btn-sm btn-primary">Start</a>
+                        </div>
+                    </div>
+                `).join("");
+            }
+
+            const recent = myResults.slice().sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt)).slice(0, 5);
+            const resEl = document.getElementById("recent-results");
+            if (recent.length === 0) {
+                resEl.innerHTML = '<p class="text-muted">No results yet. Start an exercise!</p>';
+            } else {
+                resEl.innerHTML = recent.map(r => {
+                    const ex = findExerciseById(r.exerciseId);
+                    return `<div class="flex-between mb-md" style="border-bottom:1px solid var(--color-border);padding-bottom:var(--space-sm);">
+                        <div>
+                            <div class="fw-semibold">${escapeHtml(ex ? ex.title : "Exercise")}</div>
+                            <div class="text-sm text-muted">${formatDate(r.submittedAt)}</div>
+                        </div>
+                        ${getScoreBadge(r.percentage)}
+                    </div>`;
+                }).join("");
+            }
+        });
+    </script>
+</body>
+</html>

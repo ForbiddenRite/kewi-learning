@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features – Kewi Learning</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <ul class="navbar-nav">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="features.html" class="nav-link active">Features</a></li>
+                <li><a href="subjects.html" class="nav-link">Subjects</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <a href="login.html" id="nav-login-btn" class="btn btn-primary btn-sm">Login</a>
+                <a href="#" id="nav-dashboard-link" class="btn btn-outline btn-sm hidden">Dashboard</a>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm hidden">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);">
+        <div class="page-header text-center">
+            <h1 class="page-title">Platform Features</h1>
+            <p class="page-subtitle">Everything you need for interactive, trackable online learning.</p>
+        </div>
+
+        <div class="grid-2 gap-xl">
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>📝 Exercise Builder</h3>
+                    <p>Teachers can create multiple exercise types: Reading Comprehension (with sticky side-by-side layout), Multiple Choice, Fill-in-the-Blank, True/False and more. Each exercise supports difficulty levels and subject tags.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>✅ Instant Auto-Grading</h3>
+                    <p>Once a student submits, answers are checked automatically. Scores and detailed feedback are available immediately to both student and teacher.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>🔒 One-Attempt Policy</h3>
+                    <p>Students may attempt each exercise only once. This encourages careful reading and genuine understanding rather than trial-and-error.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>📊 Performance Dashboards</h3>
+                    <p>Teachers see completion rates, average scores and individual student reports. Students can review their own results and class leaderboards.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>👥 Account Management</h3>
+                    <p>Full CRUD for student accounts. Teachers create, edit, activate or deactivate student profiles with class assignment.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>🎨 Reading-Friendly Layout</h3>
+                    <p>For reading comprehension, the passage stays sticky on one side while questions appear on the other — no more scrolling back and forth.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>🏆 Leaderboards</h3>
+                    <p>Friendly competition with per-exercise and overall rankings. Motivates students while giving teachers insight into class performance.</p>
+                </div>
+            </div>
+            <div class="card card-interactive">
+                <div class="card-body">
+                    <h3>🌓 Dark Mode & Responsive</h3>
+                    <p>Works beautifully on desktop and mobile. Toggle dark mode for comfortable late-night studying.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-bottom" style="border:none;padding-top:0;">
+                &copy; 2026 Kewi Learning. Built for educational purposes. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/constants.js"></script>
+    <script src="../data/users.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/utils.js"></script>
+</body>
+</html>

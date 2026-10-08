@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard – Kewi Learning</title>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="../../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
+            <div class="navbar-actions">
+                <span id="nav-user-display" class="text-sm fw-semibold"></span>
+                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
+                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link active"><span class="icon">📊</span> Dashboard</a>
+                <a href="exercises.html" class="sidebar-link"><span class="icon">📝</span> Exercises</a>
+                <a href="create-exercise.html" class="sidebar-link"><span class="icon">➕</span> Create Exercise</a>
+                <a href="students.html" class="sidebar-link"><span class="icon">👥</span> Students</a>
+                <a href="reports.html" class="sidebar-link"><span class="icon">📈</span> Reports</a>
+                <a href="create-student.html" class="sidebar-link"><span class="icon">🎓</span> Add Student</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Teacher Dashboard</h1>
+                <p class="page-subtitle">Welcome back! Here’s an overview of your class.</p>
+            </div>
+
+            <div class="grid-4 mb-xl" id="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div>
+                        <div class="stat-value" id="stat-exercises">0</div>
+                        <div class="stat-label">Active Exercises</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎓</div>
+                    <div>
+                        <div class="stat-value" id="stat-students">0</div>
+                        <div class="stat-label">Students</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div>
+                        <div class="stat-value" id="stat-submissions">0</div>
+                        <div class="stat-label">Submissions</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div>
+                        <div class="stat-value" id="stat-avg">0%</div>
+                        <div class="stat-label">Avg. Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header flex-between">
+                        <h3>Recent Exercises</h3>
+                        <a href="exercises.html" class="btn btn-sm btn-outline">View All</a>
+                    </div>
+                    <div class="card-body" id="recent-exercises">
+                        <div class="loading-overlay"><div class="spinner"></div></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header flex-between">
+                        <h3>Recent Submissions</h3>
+                        <a href="reports.html" class="btn btn-sm btn-outline">View Reports</a>
+                    </div>
+                    <div class="card-body" id="recent-results">
+                        <div class="loading-overlay"><div class="spinner"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-xl">
+                <h3 class="section-title">Quick Actions</h3>
+                <div class="flex gap-md flex-wrap">
+                    <a href="create-exercise.html" class="btn btn-primary">➕ New Exercise</a>
+                    <a href="create-student.html" class="btn btn-secondary">🎓 Add Student</a>
+                    <a href="reports.html" class="btn btn-outline">📈 View Reports</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/constants.js"></script>
+    <script src="../../data/users.js"></script>
+    <script src="../../data/exercises.js"></script>
+    <script src="../../data/results.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!requireAuth(ROLE_TEACHER)) return;
+
+            const exercises = getActiveExercises();
+            const students = getStudents();
+            const results = getResults();
+
+            document.getElementById("stat-exercises").textContent = exercises.length;
+            document.getElementById("stat-students").textContent = students.length;
+            document.getElementById("stat-submissions").textContent = results.length;
+
+            let avg = 0;
+            if (results.length) {
+                avg = Math.round(results.reduce((s, r) => s + r.percentage, 0) / results.length);
+            }
+            document.getElementById("stat-avg").textContent = avg + "%";
+
+            // Recent exercises
+            const recentEx = exercises.slice().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, MAX_RECENT_ITEMS);
+            const exContainer = document.getElementById("recent-exercises");
+            if (recentEx.length === 0) {
+                exContainer.innerHTML = '<div class="empty-state"><p>No exercises yet.</p></div>';
+            } else {
+                exContainer.innerHTML = recentEx.map(ex => `
+                    <div class="flex-between mb-md" style="padding-bottom:var(--space-sm);border-bottom:1px solid var(--color-border);">
+                        <div>
+                            <div class="fw-semibold">${escapeHtml(ex.title)}</div>
+                            <div class="text-sm text-muted">${getSubjectBadge(ex.subject)} ${getDifficultyBadge(ex.difficulty)}</div>
+                        </div>
+                        <a href="exercise-detail.html?id=${ex.id}" class="btn btn-sm btn-ghost">View</a>
+                    </div>
+                `).join("");
+            }
+
+            // Recent results
+            const recentRes = results.slice().sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt)).slice(0, MAX_RECENT_ITEMS);
+            const resContainer = document.getElementById("recent-results");
+            if (recentRes.length === 0) {
+                resContainer.innerHTML = '<div class="empty-state"><p>No submissions yet.</p></div>';
+            } else {
+                resContainer.innerHTML = recentRes.map(r => {
+                    const student = findUserById(r.studentId);
+                    const exercise = findExerciseById(r.exerciseId);
+                    return `
+                        <div class="flex-between mb-md" style="padding-bottom:var(--space-sm);border-bottom:1px solid var(--color-border);">
+                            <div>
+                                <div class="fw-semibold">${escapeHtml(student ? student.fullName : "Unknown")}</div>
+                                <div class="text-sm text-muted">${escapeHtml(exercise ? exercise.title : "—")} · ${formatDate(r.submittedAt)}</div>
+                            </div>
+                            ${getScoreBadge(r.percentage)}
+                        </div>
+                    `;
+                }).join("");
+            }
+        });
+    </script>
+</body>
+</html>
