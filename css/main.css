@@ -980,7 +980,7 @@ p {
     margin-bottom: var(--space-sm);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .reading-layout {
         grid-template-columns: 1fr;
     }
@@ -1181,7 +1181,7 @@ p {
 }
 
 /* ========== Responsive Sidebar ========== */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .sidebar {
         position: fixed;
         left: -100%;
