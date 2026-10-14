@@ -1195,6 +1195,9 @@ p {
     .main-content {
         padding: var(--space-md);
     }
+    .navbar-brand .brand-name {
+        display: none;
+    }
     .navbar-nav {
         display: none;
     }
