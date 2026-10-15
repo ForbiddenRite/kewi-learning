@@ -8,7 +8,8 @@ const DEFAULT_EXERCISES = [
     {
         id: "ex_001",
         title: "The Amazing Kiwi Fruit",
-        description: "Read a short passage about kiwi fruit and answer comprehension questions.",
+        description:
+            "Read a short passage about kiwi fruit and answer comprehension questions.",
         type: "reading_comprehension",
         subject: "english",
         difficulty: "easy",
@@ -28,7 +29,7 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 text: "Where was the kiwi fruit originally grown?",
                 type: "multiple_choice",
                 options: ["New Zealand", "China", "Italy", "Chile"],
-                correctAnswer: "China"
+                correctAnswer: "China",
             },
             {
                 id: "q2",
@@ -38,35 +39,37 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                     "Because it tastes like the kiwi bird",
                     "After their national bird which is also brown and fuzzy",
                     "Because it was discovered by a person named Kiwi",
-                    "It is an abbreviation of a Chinese word"
+                    "It is an abbreviation of a Chinese word",
                 ],
-                correctAnswer: "After their national bird which is also brown and fuzzy"
+                correctAnswer:
+                    "After their national bird which is also brown and fuzzy",
             },
             {
                 id: "q3",
                 text: "Kiwi fruits contain more vitamin C than oranges.",
                 type: "true_false",
-                correctAnswer: "true"
+                correctAnswer: "true",
             },
             {
                 id: "q4",
                 text: "According to the passage, farmers grow kiwis on ______, similar to grapes.",
                 type: "fill_blank",
-                correctAnswer: "vines"
+                correctAnswer: "vines",
             },
             {
                 id: "q5",
                 text: "Which of the following is NOT mentioned as a nutrient found in kiwi fruits?",
                 type: "multiple_choice",
                 options: ["Vitamin C", "Vitamin K", "Vitamin D", "Vitamin E"],
-                correctAnswer: "Vitamin D"
-            }
-        ]
+                correctAnswer: "Vitamin D",
+            },
+        ],
     },
     {
         id: "ex_002",
         title: "Basic Algebra Challenge",
-        description: "Test your understanding of simple algebraic equations and expressions.",
+        description:
+            "Test your understanding of simple algebraic equations and expressions.",
         type: "multiple_choice",
         subject: "math",
         difficulty: "medium",
@@ -81,40 +84,41 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 text: "What is the value of x if 2x + 5 = 15?",
                 type: "multiple_choice",
                 options: ["3", "5", "7", "10"],
-                correctAnswer: "5"
+                correctAnswer: "5",
             },
             {
                 id: "q2",
                 text: "Simplify: 3(a + 4) - 2a",
                 type: "multiple_choice",
                 options: ["a + 12", "5a + 12", "a + 4", "3a + 12"],
-                correctAnswer: "a + 12"
+                correctAnswer: "a + 12",
             },
             {
                 id: "q3",
                 text: "If y = 3x - 2 and x = 4, what is y?",
                 type: "multiple_choice",
                 options: ["8", "10", "12", "14"],
-                correctAnswer: "10"
+                correctAnswer: "10",
             },
             {
                 id: "q4",
                 text: "The expression 5x² means 5 times x, then squared.",
                 type: "true_false",
-                correctAnswer: "false"
+                correctAnswer: "false",
             },
             {
                 id: "q5",
                 text: "Solve for x: x/4 = 6",
                 type: "fill_blank",
-                correctAnswer: "24"
-            }
-        ]
+                correctAnswer: "24",
+            },
+        ],
     },
     {
         id: "ex_003",
         title: "Water Cycle Basics",
-        description: "Learn about the stages of the water cycle through interactive questions.",
+        description:
+            "Learn about the stages of the water cycle through interactive questions.",
         type: "multiple_choice",
         subject: "science",
         difficulty: "easy",
@@ -128,34 +132,40 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 id: "q1",
                 text: "Which process turns liquid water into water vapor?",
                 type: "multiple_choice",
-                options: ["Condensation", "Evaporation", "Precipitation", "Collection"],
-                correctAnswer: "Evaporation"
+                options: [
+                    "Condensation",
+                    "Evaporation",
+                    "Precipitation",
+                    "Collection",
+                ],
+                correctAnswer: "Evaporation",
             },
             {
                 id: "q2",
                 text: "Rain, snow, and hail are all forms of ______.",
                 type: "fill_blank",
-                correctAnswer: "precipitation"
+                correctAnswer: "precipitation",
             },
             {
                 id: "q3",
                 text: "Clouds are formed by condensation of water vapor.",
                 type: "true_false",
-                correctAnswer: "true"
+                correctAnswer: "true",
             },
             {
                 id: "q4",
                 text: "What is the main source of energy that drives the water cycle?",
                 type: "multiple_choice",
                 options: ["The Moon", "The Sun", "Wind", "Ocean currents"],
-                correctAnswer: "The Sun"
-            }
-        ]
+                correctAnswer: "The Sun",
+            },
+        ],
     },
     {
         id: "ex_004",
         title: "Ancient Civilizations Quiz",
-        description: "Test your knowledge of early human civilizations around the world.",
+        description:
+            "Test your knowledge of early human civilizations around the world.",
         type: "multiple_choice",
         subject: "history",
         difficulty: "medium",
@@ -169,34 +179,40 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 id: "q1",
                 text: "Which ancient civilization built the pyramids of Giza?",
                 type: "multiple_choice",
-                options: ["Mesopotamia", "Ancient Egypt", "Indus Valley", "Ancient Greece"],
-                correctAnswer: "Ancient Egypt"
+                options: [
+                    "Mesopotamia",
+                    "Ancient Egypt",
+                    "Indus Valley",
+                    "Ancient Greece",
+                ],
+                correctAnswer: "Ancient Egypt",
             },
             {
                 id: "q2",
                 text: "The Code of Hammurabi is associated with which civilization?",
                 type: "multiple_choice",
                 options: ["Egypt", "China", "Mesopotamia", "Rome"],
-                correctAnswer: "Mesopotamia"
+                correctAnswer: "Mesopotamia",
             },
             {
                 id: "q3",
                 text: "The Great Wall was primarily built by the Ancient Romans.",
                 type: "true_false",
-                correctAnswer: "false"
+                correctAnswer: "false",
             },
             {
                 id: "q4",
                 text: "Which river was central to the development of Ancient Egyptian civilization?",
                 type: "fill_blank",
-                correctAnswer: "Nile"
-            }
-        ]
+                correctAnswer: "Nile",
+            },
+        ],
     },
     {
         id: "ex_005",
         title: "Vocabulary Builder: Environment",
-        description: "Expand your English vocabulary related to the environment and nature.",
+        description:
+            "Expand your English vocabulary related to the environment and nature.",
         type: "multiple_choice",
         subject: "english",
         difficulty: "medium",
@@ -214,41 +230,42 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                     "Able to be broken down by natural processes",
                     "Made of plastic",
                     "Harmful to the environment",
-                    "Unable to be recycled"
+                    "Unable to be recycled",
                 ],
-                correctAnswer: "Able to be broken down by natural processes"
+                correctAnswer: "Able to be broken down by natural processes",
             },
             {
                 id: "q2",
                 text: "A species that is at risk of extinction is called ______.",
                 type: "fill_blank",
-                correctAnswer: "endangered"
+                correctAnswer: "endangered",
             },
             {
                 id: "q3",
                 text: "'Sustainable' means using resources in a way that preserves them for the future.",
                 type: "true_false",
-                correctAnswer: "true"
+                correctAnswer: "true",
             },
             {
                 id: "q4",
                 text: "Which word means 'the variety of life in a particular habitat'?",
                 type: "multiple_choice",
                 options: ["Biodiversity", "Pollution", "Erosion", "Habitat"],
-                correctAnswer: "Biodiversity"
+                correctAnswer: "Biodiversity",
             },
             {
                 id: "q5",
                 text: "The opposite of 'renewable' energy is ______ energy.",
                 type: "fill_blank",
-                correctAnswer: "non-renewable"
-            }
-        ]
+                correctAnswer: "non-renewable",
+            },
+        ],
     },
     {
         id: "ex_006",
         title: "Fractions & Decimals",
-        description: "Practice converting and comparing fractions and decimals.",
+        description:
+            "Practice converting and comparing fractions and decimals.",
         type: "multiple_choice",
         subject: "math",
         difficulty: "easy",
@@ -263,33 +280,34 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 text: "What is 3/4 as a decimal?",
                 type: "multiple_choice",
                 options: ["0.25", "0.5", "0.75", "0.34"],
-                correctAnswer: "0.75"
+                correctAnswer: "0.75",
             },
             {
                 id: "q2",
                 text: "Which fraction is equivalent to 0.5?",
                 type: "multiple_choice",
                 options: ["1/3", "1/2", "2/5", "3/4"],
-                correctAnswer: "1/2"
+                correctAnswer: "1/2",
             },
             {
                 id: "q3",
                 text: "0.25 is greater than 1/5.",
                 type: "true_false",
-                correctAnswer: "true"
+                correctAnswer: "true",
             },
             {
                 id: "q4",
                 text: "Convert 2/5 to a decimal.",
                 type: "fill_blank",
-                correctAnswer: "0.4"
-            }
-        ]
+                correctAnswer: "0.4",
+            },
+        ],
     },
     {
         id: "ex_007",
         title: "Photosynthesis Explained",
-        description: "Reading comprehension about how plants make their own food.",
+        description:
+            "Reading comprehension about how plants make their own food.",
         type: "reading_comprehension",
         subject: "science",
         difficulty: "medium",
@@ -312,19 +330,19 @@ The glucose produced is used by the plant for energy and growth, or stored as st
                 text: "Where does photosynthesis mainly take place in plants?",
                 type: "multiple_choice",
                 options: ["Roots", "Stems", "Leaves", "Flowers"],
-                correctAnswer: "Leaves"
+                correctAnswer: "Leaves",
             },
             {
                 id: "q2",
                 text: "What is the green pigment that absorbs sunlight called?",
                 type: "fill_blank",
-                correctAnswer: "chlorophyll"
+                correctAnswer: "chlorophyll",
             },
             {
                 id: "q3",
                 text: "Photosynthesis produces oxygen as a byproduct.",
                 type: "true_false",
-                correctAnswer: "true"
+                correctAnswer: "true",
             },
             {
                 id: "q4",
@@ -334,17 +352,17 @@ The glucose produced is used by the plant for energy and growth, or stored as st
                     "Carbon dioxide and water",
                     "Glucose and oxygen",
                     "Nitrogen and oxygen",
-                    "Starch and carbon dioxide"
+                    "Starch and carbon dioxide",
                 ],
-                correctAnswer: "Glucose and oxygen"
+                correctAnswer: "Glucose and oxygen",
             },
             {
                 id: "q5",
                 text: "Tiny pores on leaves that take in carbon dioxide are called ______.",
                 type: "fill_blank",
-                correctAnswer: "stomata"
-            }
-        ]
+                correctAnswer: "stomata",
+            },
+        ],
     },
     {
         id: "ex_008",
@@ -364,29 +382,29 @@ The glucose produced is used by the plant for energy and growth, or stored as st
                 text: "What is the largest planet in our solar system?",
                 type: "multiple_choice",
                 options: ["Earth", "Saturn", "Jupiter", "Neptune"],
-                correctAnswer: "Jupiter"
+                correctAnswer: "Jupiter",
             },
             {
                 id: "q2",
                 text: "How many continents are there on Earth?",
                 type: "fill_blank",
-                correctAnswer: "7"
+                correctAnswer: "7",
             },
             {
                 id: "q3",
                 text: "The Great Barrier Reef is located in Australia.",
                 type: "true_false",
-                correctAnswer: "true"
+                correctAnswer: "true",
             },
             {
                 id: "q4",
                 text: "What is the chemical symbol for gold?",
                 type: "multiple_choice",
                 options: ["Go", "Gd", "Au", "Ag"],
-                correctAnswer: "Au"
-            }
-        ]
-    }
+                correctAnswer: "Au",
+            },
+        ],
+    },
 ];
 
 /**
@@ -394,7 +412,10 @@ The glucose produced is used by the plant for energy and growth, or stored as st
  */
 function initExercises() {
     if (!localStorage.getItem(STORAGE_KEY_EXERCISES)) {
-        localStorage.setItem(STORAGE_KEY_EXERCISES, JSON.stringify(DEFAULT_EXERCISES));
+        localStorage.setItem(
+            STORAGE_KEY_EXERCISES,
+            JSON.stringify(DEFAULT_EXERCISES),
+        );
     }
 }
 
@@ -421,7 +442,7 @@ function saveExercises(exercises) {
  * @returns {Object|null}
  */
 function findExerciseById(id) {
-    return getExercises().find(e => e.id === id) || null;
+    return getExercises().find((e) => e.id === id) || null;
 }
 
 /**
@@ -429,7 +450,7 @@ function findExerciseById(id) {
  * @returns {Array}
  */
 function getActiveExercises() {
-    return getExercises().filter(e => e.status === STATUS_ACTIVE);
+    return getExercises().filter((e) => e.status === STATUS_ACTIVE);
 }
 
 /**
@@ -446,13 +467,14 @@ function createExercise(data) {
         type: data.type || EXERCISE_TYPE_MCQ,
         subject: data.subject || SUBJECT_GENERAL,
         difficulty: data.difficulty || DIFFICULTY_MEDIUM,
-        pointsPerQuestion: data.pointsPerQuestion || DEFAULT_POINTS_PER_QUESTION,
+        pointsPerQuestion:
+            data.pointsPerQuestion || DEFAULT_POINTS_PER_QUESTION,
         createdBy: data.createdBy,
         createdAt: new Date().toISOString(),
         status: STATUS_ACTIVE,
         tags: data.tags || [],
         passage: data.passage || null,
-        questions: data.questions || []
+        questions: data.questions || [],
     };
     exercises.push(newExercise);
     saveExercises(exercises);
@@ -467,9 +489,13 @@ function createExercise(data) {
  */
 function updateExercise(id, updates) {
     const exercises = getExercises();
-    const index = exercises.findIndex(e => e.id === id);
+    const index = exercises.findIndex((e) => e.id === id);
     if (index === -1) return null;
-    exercises[index] = { ...exercises[index], ...updates, id: exercises[index].id };
+    exercises[index] = {
+        ...exercises[index],
+        ...updates,
+        id: exercises[index].id,
+    };
     saveExercises(exercises);
     return exercises[index];
 }
@@ -482,9 +508,23 @@ function updateExercise(id, updates) {
  */
 function deleteExercise(id) {
     const exercises = getExercises();
-    const filtered = exercises.filter(e => e.id !== id);
+    const filtered = exercises.filter((e) => e.id !== id);
     if (filtered.length === exercises.length) return false;
-    saveExercises(filtered);
+    if (deleteExerciseResult(id)) saveExercises(filtered);
+    return true;
+}
+
+/**
+ * Permanently delete results of an Exercise from storage.
+ *
+ * @param {string} id
+ * @returns {boolean}
+ */
+function deleteExerciseResult(id) {
+    const results = getResults();
+    const filtered = getResultsByExercise(id);
+    if (results.length === filtered.length) return false;
+    saveResults(filtered);
     return true;
 }
 
@@ -497,7 +537,7 @@ function deleteExercise(id) {
  */
 function setExerciseEnabled(id, enabled) {
     return updateExercise(id, {
-        status: enabled ? STATUS_ACTIVE : STATUS_INACTIVE
+        status: enabled ? STATUS_ACTIVE : STATUS_INACTIVE,
     });
 }
 
