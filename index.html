@@ -1,208 +1,329 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kewi Learning – Grow Your Knowledge Like a Kiwi</title>
-    <meta name="description" content="Kewi Learning is an interactive online learning platform for secondary students. Teachers create exercises, students learn and grow.">
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="index.html" class="navbar-brand">
-                <span class="logo-icon" aria-hidden="true">🥝</span>
-                <span class="brand-name">Kewi Learning</span>
-            </a>
-            <ul class="navbar-nav">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="pages/about.html" class="nav-link">About</a></li>
-                <li><a href="pages/features.html" class="nav-link">Features</a></li>
-                <li><a href="pages/subjects.html" class="nav-link">Subjects</a></li>
-                <li><a href="pages/contact.html" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="navbar-actions">
-                <a href="pages/login.html" id="nav-login-btn" class="btn btn-primary btn-sm">Login</a>
-                <a href="#" id="nav-dashboard-link" class="btn btn-outline btn-sm hidden">Dashboard</a>
-                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm hidden">Logout</a>
-                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark mode">🌓</button>
-            </div>
-        </nav>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kewi Learning – Grow Your Knowledge Like a Kiwi</title>
+        <meta
+            name="description"
+            content="Kewi Learning is an interactive online learning platform for secondary students. Teachers create exercises, students learn and grow."
+        />
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar">
+                <a href="index.html" class="navbar-brand">
+                    <span class="logo-icon" aria-hidden="true">🥝</span>
+                    <span class="brand-name">Kewi Learning</span>
+                </a>
+                <ul class="navbar-nav">
+                    <li>
+                        <a href="index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li>
+                        <a href="pages/about.html" class="nav-link">About</a>
+                    </li>
+                    <li>
+                        <a href="pages/features.html" class="nav-link"
+                            >Features</a
+                        >
+                    </li>
+                    <li>
+                        <a href="pages/subjects.html" class="nav-link"
+                            >Subjects</a
+                        >
+                    </li>
+                    <li>
+                        <a href="pages/contact.html" class="nav-link"
+                            >Contact</a
+                        >
+                    </li>
+                </ul>
+                <div class="navbar-actions">
+                    <a
+                        href="pages/login.html"
+                        id="nav-login-btn"
+                        class="btn btn-primary btn-sm"
+                        >Login</a
+                    >
+                    <a
+                        href="#"
+                        id="nav-dashboard-link"
+                        class="btn btn-outline btn-sm hidden"
+                        >Dashboard</a
+                    >
+                    <a
+                        href="#"
+                        id="nav-logout-btn"
+                        class="btn btn-ghost btn-sm hidden"
+                        >Logout</a
+                    >
+                    <button
+                        class="btn btn-ghost btn-sm"
+                        onclick="toggleTheme()"
+                        title="Toggle theme"
+                        aria-label="Toggle dark mode"
+                    >
+                        🌓
+                    </button>
+                </div>
+            </nav>
+        </header>
 
-    <main>
-        <!-- Hero -->
-        <section class="hero">
+        <main>
+            <!-- Hero -->
+            <section class="hero">
+                <div class="container">
+                    <h1>Welcome to Kewi Learning</h1>
+                    <p>
+                        An interactive online learning platform where knowledge
+                        grows like a kiwi — fresh, vibrant, and full of
+                        potential. Designed for secondary students and their
+                        teachers.
+                    </p>
+                    <div class="hero-actions">
+                        <a
+                            href="pages/login.html"
+                            class="btn btn-secondary btn-lg"
+                            >Get Started</a
+                        >
+                        <a
+                            href="pages/features.html"
+                            class="btn btn-outline btn-lg"
+                            style="border-color: #fff; color: #fff"
+                            >Explore Features</a
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="section" style="padding-top: var(--space-2xl)">
+                <div class="container">
+                    <div class="grid-4">
+                        <div class="stat-card">
+                            <div class="stat-icon">📚</div>
+                            <div>
+                                <div class="stat-value" id="stat-exercises">
+                                    8
+                                </div>
+                                <div class="stat-label">Exercises</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">👨‍🏫</div>
+                            <div>
+                                <div class="stat-value">1</div>
+                                <div class="stat-label">Teachers</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎓</div>
+                            <div>
+                                <div class="stat-value" id="stat-students">
+                                    5
+                                </div>
+                                <div class="stat-label">Students</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🏆</div>
+                            <div>
+                                <div class="stat-value">5+</div>
+                                <div class="stat-label">Subjects</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Preview -->
+            <section class="section">
+                <div class="container">
+                    <h2 class="section-title text-center">
+                        Why Kewi Learning?
+                    </h2>
+                    <div class="grid-3">
+                        <div class="card card-interactive">
+                            <div class="card-body text-center">
+                                <div
+                                    style="
+                                        font-size: 2.5rem;
+                                        margin-bottom: var(--space-md);
+                                    "
+                                >
+                                    ✏️
+                                </div>
+                                <h3 class="card-title">Create & Assign</h3>
+                                <p class="text-muted">
+                                    Teachers can design reading comprehension,
+                                    multiple choice, fill-in-the-blank and more
+                                    — then track student progress in real time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card card-interactive">
+                            <div class="card-body text-center">
+                                <div
+                                    style="
+                                        font-size: 2.5rem;
+                                        margin-bottom: var(--space-md);
+                                    "
+                                >
+                                    🎯
+                                </div>
+                                <h3 class="card-title">One-Attempt Focus</h3>
+                                <p class="text-muted">
+                                    Students get one focused attempt per
+                                    exercise. Instant scoring encourages careful
+                                    thinking and genuine learning.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card card-interactive">
+                            <div class="card-body text-center">
+                                <div
+                                    style="
+                                        font-size: 2.5rem;
+                                        margin-bottom: var(--space-md);
+                                    "
+                                >
+                                    📊
+                                </div>
+                                <h3 class="card-title">Transparent Progress</h3>
+                                <p class="text-muted">
+                                    Both teachers and students can view scores
+                                    and leaderboards. Celebrate growth and
+                                    identify areas to improve.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Subjects -->
+            <section
+                class="section"
+                style="
+                    background: var(--color-white);
+                    padding: var(--space-2xl) 0;
+                "
+            >
+                <div class="container">
+                    <h2 class="section-title text-center">Subjects We Cover</h2>
+                    <div class="grid-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div style="font-size: 2rem">📖</div>
+                                <h4>English</h4>
+                                <p class="text-sm text-muted">
+                                    Reading, vocabulary & comprehension
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div style="font-size: 2rem">🔢</div>
+                                <h4>Mathematics</h4>
+                                <p class="text-sm text-muted">
+                                    Algebra, fractions & more
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div style="font-size: 2rem">🔬</div>
+                                <h4>Science</h4>
+                                <p class="text-sm text-muted">
+                                    Biology, water cycle & beyond
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <div style="font-size: 2rem">🏛️</div>
+                                <h4>History</h4>
+                                <p class="text-sm text-muted">
+                                    Ancient civilizations & knowledge
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="section text-center">
+                <div class="container">
+                    <h2>Ready to grow your knowledge?</h2>
+                    <p class="text-muted mb-lg">
+                        Log in as a teacher or student to start exploring Kewi
+                        Learning today.
+                    </p>
+                    <a href="pages/login.html" class="btn btn-primary btn-lg"
+                        >Login Now</a
+                    >
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
             <div class="container">
-                <h1>Welcome to Kewi Learning</h1>
-                <p>An interactive online learning platform where knowledge grows like a kiwi — fresh, vibrant, and full of potential. Designed for secondary students and their teachers.</p>
-                <div class="hero-actions">
-                    <a href="pages/login.html" class="btn btn-secondary btn-lg">Get Started</a>
-                    <a href="pages/features.html" class="btn btn-outline btn-lg" style="border-color:#fff;color:#fff;">Explore Features</a>
+                <div class="footer-content">
+                    <div>
+                        <div class="footer-brand">🥝 Kewi Learning</div>
+                        <p class="text-sm">
+                            Grow Your Knowledge Like a Kiwi. An interactive
+                            platform for secondary education.
+                        </p>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Explore</h4>
+                        <a href="pages/about.html">About Us</a>
+                        <a href="pages/features.html">Features</a>
+                        <a href="pages/subjects.html">Subjects</a>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Support</h4>
+                        <a href="pages/help.html">Help Centre</a>
+                        <a href="pages/faq.html">FAQ</a>
+                        <a href="pages/contact.html">Contact</a>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Account</h4>
+                        <a href="pages/login.html">Login</a>
+                        <a href="pages/demo.html">Try Demo</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    &copy; 2026 Kewi Learning. Built for educational purposes.
+                    All rights reserved.
                 </div>
             </div>
-        </section>
+        </footer>
 
-        <!-- Stats -->
-        <section class="section" style="padding-top: var(--space-2xl);">
-            <div class="container">
-                <div class="grid-4">
-                    <div class="stat-card">
-                        <div class="stat-icon">📚</div>
-                        <div>
-                            <div class="stat-value" id="stat-exercises">8</div>
-                            <div class="stat-label">Exercises</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">👨‍🏫</div>
-                        <div>
-                            <div class="stat-value">1</div>
-                            <div class="stat-label">Teachers</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🎓</div>
-                        <div>
-                            <div class="stat-value" id="stat-students">5</div>
-                            <div class="stat-label">Students</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🏆</div>
-                        <div>
-                            <div class="stat-value">5+</div>
-                            <div class="stat-label">Subjects</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Preview -->
-        <section class="section">
-            <div class="container">
-                <h2 class="section-title text-center">Why Kewi Learning?</h2>
-                <div class="grid-3">
-                    <div class="card card-interactive">
-                        <div class="card-body text-center">
-                            <div style="font-size:2.5rem;margin-bottom:var(--space-md);">✏️</div>
-                            <h3 class="card-title">Create & Assign</h3>
-                            <p class="text-muted">Teachers can design reading comprehension, multiple choice, fill-in-the-blank and more — then track student progress in real time.</p>
-                        </div>
-                    </div>
-                    <div class="card card-interactive">
-                        <div class="card-body text-center">
-                            <div style="font-size:2.5rem;margin-bottom:var(--space-md);">🎯</div>
-                            <h3 class="card-title">One-Attempt Focus</h3>
-                            <p class="text-muted">Students get one focused attempt per exercise. Instant scoring encourages careful thinking and genuine learning.</p>
-                        </div>
-                    </div>
-                    <div class="card card-interactive">
-                        <div class="card-body text-center">
-                            <div style="font-size:2.5rem;margin-bottom:var(--space-md);">📊</div>
-                            <h3 class="card-title">Transparent Progress</h3>
-                            <p class="text-muted">Both teachers and students can view scores and leaderboards. Celebrate growth and identify areas to improve.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Subjects -->
-        <section class="section" style="background:var(--color-white);padding:var(--space-2xl) 0;">
-            <div class="container">
-                <h2 class="section-title text-center">Subjects We Cover</h2>
-                <div class="grid-4">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div style="font-size:2rem;">📖</div>
-                            <h4>English</h4>
-                            <p class="text-sm text-muted">Reading, vocabulary & comprehension</p>
-                        </div>
-                    </div>
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div style="font-size:2rem;">🔢</div>
-                            <h4>Mathematics</h4>
-                            <p class="text-sm text-muted">Algebra, fractions & more</p>
-                        </div>
-                    </div>
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div style="font-size:2rem;">🔬</div>
-                            <h4>Science</h4>
-                            <p class="text-sm text-muted">Biology, water cycle & beyond</p>
-                        </div>
-                    </div>
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <div style="font-size:2rem;">🏛️</div>
-                            <h4>History</h4>
-                            <p class="text-sm text-muted">Ancient civilizations & knowledge</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="section text-center">
-            <div class="container">
-                <h2>Ready to grow your knowledge?</h2>
-                <p class="text-muted mb-lg">Log in as a teacher or student to start exploring Kewi Learning today.</p>
-                <a href="pages/login.html" class="btn btn-primary btn-lg">Login Now</a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div>
-                    <div class="footer-brand">🥝 Kewi Learning</div>
-                    <p class="text-sm">Grow Your Knowledge Like a Kiwi. An interactive platform for secondary education.</p>
-                </div>
-                <div class="footer-links">
-                    <h4>Explore</h4>
-                    <a href="pages/about.html">About Us</a>
-                    <a href="pages/features.html">Features</a>
-                    <a href="pages/subjects.html">Subjects</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Support</h4>
-                    <a href="pages/help.html">Help Centre</a>
-                    <a href="pages/faq.html">FAQ</a>
-                    <a href="pages/contact.html">Contact</a>
-                </div>
-                <div class="footer-links">
-                    <h4>Account</h4>
-                    <a href="pages/login.html">Login</a>
-                    <a href="pages/demo.html">Try Demo</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; 2026 Kewi Learning. Built for educational purposes. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/constants.js"></script>
-    <script src="data/users.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/utils.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Update live stats if data available
-            try {
-                const exercises = getActiveExercises ? getActiveExercises().length : 8;
-                const students = getStudents ? getStudents().length : 5;
-                const elEx = document.getElementById("stat-exercises");
-                const elSt = document.getElementById("stat-students");
-                if (elEx) elEx.textContent = exercises;
-                if (elSt) elSt.textContent = students;
-            } catch (e) { /* data may not be loaded on home */ }
-        });
-    </script>
-</body>
+        <script src="js/constants.js"></script>
+        <script src="data/users.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/utils.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Update live stats if data available
+                try {
+                    const exercises = getActiveExercises
+                        ? getActiveExercises().length
+                        : 8;
+                    const students = getStudents ? getStudents().length : 5;
+                    const elEx = document.getElementById("stat-exercises");
+                    const elSt = document.getElementById("stat-students");
+                    if (elEx) elEx.textContent = exercises;
+                    if (elSt) elSt.textContent = students;
+                } catch (e) {
+                    /* data may not be loaded on home */
+                }
+            });
+        </script>
+    </body>
 </html>
