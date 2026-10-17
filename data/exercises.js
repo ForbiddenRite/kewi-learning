@@ -482,6 +482,110 @@ function createExercise(data) {
 }
 
 /**
+ * Update the exercise and delete its results (if any)
+ * @param {Object} data
+ * @returns {Object}
+ */
+function editExercise(data) {
+    const oid = data.oid;
+    const updatedExercise = {
+        title: data.title,
+        description: data.description || "",
+        type: data.type || EXERCISE_TYPE_MCQ,
+        subject: data.subject || SUBJECT_GENERAL,
+        difficulty: data.difficulty || DIFFICULTY_MEDIUM,
+        pointsPerQuestion:
+            data.pointsPerQuestion || DEFAULT_POINTS_PER_QUESTION,
+        createdBy: data.createdBy,
+        tags: data.tags || [],
+        passage: data.passage || null,
+        questions: data.questions || [],
+    };
+    deleteExerciseResult(oid);
+    return updateExercise(oid, updatedExercise);
+
+    // const exercises = getExercises();
+    // const newExercise = {
+    //     id: "ex_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+    //     title: data.title,
+    //     description: data.description || "",
+    //     type: data.type || EXERCISE_TYPE_MCQ,
+    //     subject: data.subject || SUBJECT_GENERAL,
+    //     difficulty: data.difficulty || DIFFICULTY_MEDIUM,
+    //     pointsPerQuestion:
+    //         data.pointsPerQuestion || DEFAULT_POINTS_PER_QUESTION,
+    //     createdBy: data.createdBy,
+    //     createdAt: new Date().toISOString(),
+    //     status: STATUS_ACTIVE,
+    //     tags: data.tags || [],
+    //     passage: data.passage || null,
+    //     questions: data.questions || [],
+    // };
+    // exercises.push(newExercise);
+    // saveExercises(exercises);
+
+    // deleteExercise(oid);
+    // return newExercise;
+}
+
+/**
+ * check exercise chagnes
+ * @param {string} id
+ * @param {Object} updates
+ * @returns {Object|null}
+ */
+function checkExerciseChanged(id, updates) {
+    const exercises = getExercises();
+    const index = exercises.findIndex((e) => e.id === id);
+    if (index === -1) return null;
+    return !isSubsetDeepEqual(exercises[index], updates, "oid");
+}
+
+function isSubsetDeepEqual(sourceEx, newEx, skipPropertyName) {
+    // If newEx is a primitive value, perform a direct strict comparison
+    if (typeof newEx !== "object" || newEx === null) {
+        if (sourceEx !== newEx) console.log("diff:", newEx, sourceEx);
+        return sourceEx === newEx;
+    }
+
+    // If newEx is an object/array, sourceEx must also be an object/array
+    if (typeof sourceEx !== "object" || sourceEx === null) {
+        console.log("object/array");
+        return false;
+    }
+
+    // Enforce strict length matching if both are arrays
+    if (Array.isArray(newEx) && Array.isArray(sourceEx)) {
+        if (newEx.length !== sourceEx.length) {
+            console.log("array length");
+            return false;
+        }
+    }
+
+    // Iterate only through the keys present in the newEx object
+    for (const key of Object.keys(newEx)) {
+        // Skip checking if the property name is skipPropertyName
+        if (key === skipPropertyName) {
+            continue;
+        }
+
+        // Fail if the key doesn't even exist in the target object
+        if (!(key in sourceEx)) {
+            console.log("key doesn't even exist in the target object");
+            return false;
+        }
+
+        // Recursively check the values of this key
+        if (!isSubsetDeepEqual(sourceEx[key], newEx[key], skipPropertyName)) {
+            console.log("Recursively check false");
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
  * Update exercise
  * @param {string} id
  * @param {Object} updates
@@ -510,7 +614,8 @@ function deleteExercise(id) {
     const exercises = getExercises();
     const filtered = exercises.filter((e) => e.id !== id);
     if (filtered.length === exercises.length) return false;
-    if (deleteExerciseResult(id)) saveExercises(filtered);
+    deleteExerciseResult(id);
+    saveExercises(filtered);
     return true;
 }
 
