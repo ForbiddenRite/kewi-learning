@@ -482,6 +482,37 @@ function createExercise(data) {
 }
 
 /**
+ * Update the exercise by Creating a duplicate, and delete the old one and its records
+ * @param {Object} data
+ * @returns {Object}
+ */
+function editExercise(data) {
+    const oid = data.oid;
+    const exercises = getExercises();
+    const newExercise = {
+        id: "ex_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+        title: data.title,
+        description: data.description || "",
+        type: data.type || EXERCISE_TYPE_MCQ,
+        subject: data.subject || SUBJECT_GENERAL,
+        difficulty: data.difficulty || DIFFICULTY_MEDIUM,
+        pointsPerQuestion:
+            data.pointsPerQuestion || DEFAULT_POINTS_PER_QUESTION,
+        createdBy: data.createdBy,
+        createdAt: new Date().toISOString(),
+        status: STATUS_ACTIVE,
+        tags: data.tags || [],
+        passage: data.passage || null,
+        questions: data.questions || [],
+    };
+    exercises.push(newExercise);
+    saveExercises(exercises);
+
+    deleteExercise(oid);
+    return newExercise;
+}
+
+/**
  * Update exercise
  * @param {string} id
  * @param {Object} updates
@@ -510,7 +541,8 @@ function deleteExercise(id) {
     const exercises = getExercises();
     const filtered = exercises.filter((e) => e.id !== id);
     if (filtered.length === exercises.length) return false;
-    if (deleteExerciseResult(id)) saveExercises(filtered);
+    deleteExerciseResult(id);
+    saveExercises(filtered);
     return true;
 }
 
