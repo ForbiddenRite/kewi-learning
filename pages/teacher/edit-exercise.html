@@ -36,10 +36,10 @@
                     <a href="dashboard.html" class="sidebar-link"
                         ><span class="icon">📊</span> Dashboard</a
                     >
-                    <a href="exercises.html" class="sidebar-link"
+                    <a href="exercises.html" class="sidebar-link active"
                         ><span class="icon">📝</span> Exercises</a
                     >
-                    <a href="create-exercise.html" class="sidebar-link active"
+                    <a href="create-exercise.html" class="sidebar-link"
                         ><span class="icon">➕</span> Create Exercise</a
                     >
                     <a href="students.html" class="sidebar-link"
@@ -160,7 +160,7 @@
                     </div>
                     <div class="card-footer flex gap-md">
                         <button type="submit" class="btn btn-primary">
-                            Save Change
+                            Save Changes
                         </button>
                         <a href="exercises.html" class="btn btn-ghost"
                             >Cancel</a
@@ -183,8 +183,13 @@
             document.addEventListener("DOMContentLoaded", () => {
                 const id = getQueryParam("id");
                 const ex = findExerciseById(id);
-
+                console.log(ex);
+                if (!ex) {
+                    showToast("Exercise not found", "error");
+                    return;
+                }
                 if (!requireAuth(ROLE_TEACHER)) return;
+
                 const user = getCurrentUser();
 
                 // Populate selects
@@ -224,7 +229,6 @@
                     const qMax = q
                         ? getQuestionMax(Number(q.id.split("_")[1]))
                         : getQuestionMax();
-                    console.log("qmax", qMax, q);
                     const id = "q_" + qMax;
                     const html = `
                     <div class="card mb-md" id="question-block-${qMax}" data-qid="${id}">
@@ -265,7 +269,6 @@
 
                 //Create Questions from the data
                 (ex.questions || []).map((q, i) => {
-                    console.log("aaaaa");
                     addQuestion(q);
                 });
 
@@ -350,15 +353,24 @@
                         };
 
                         try {
-                            editExercise(data);
-                            showToast(
-                                "Exercise updated successfully!",
-                                "success",
-                            );
-                            setTimeout(
-                                () => (window.location.href = "exercises.html"),
-                                800,
-                            );
+                            if (checkExerciseChanged(ex.id, data)) {
+                                editExercise(data);
+                                showToast(
+                                    "Exercise updated successfully!",
+                                    "success",
+                                );
+                                setTimeout(
+                                    () =>
+                                        (window.location.href =
+                                            "exercises.html"),
+                                    800,
+                                );
+                            } else {
+                                showToast(
+                                    "No changes in the Exercise",
+                                    "success",
+                                );
+                            }
                         } catch (err) {
                             console.log(err);
                             showToast(
