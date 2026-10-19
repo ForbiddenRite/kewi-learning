@@ -97,7 +97,7 @@
                                 rows="2"
                             ></textarea>
                         </div>
-                        <div class="grid-3">
+                        <div class="grid-4">
                             <div class="form-group">
                                 <label class="form-label" for="type"
                                     >Exercise Type *</label
@@ -129,6 +129,18 @@
                                     value="10"
                                     min="1"
                                     max="100"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="time-limit"
+                                    >Time limit</label
+                                >
+                                <input
+                                    type="number"
+                                    id="time-limit"
+                                    class="form-control"
+                                    value="0"
+                                    min="0"
                                 />
                             </div>
                         </div>
@@ -183,7 +195,6 @@
             document.addEventListener("DOMContentLoaded", () => {
                 const id = getQueryParam("id");
                 const ex = findExerciseById(id);
-                console.log(ex);
                 if (!ex) {
                     showToast("Exercise not found", "error");
                     return;
@@ -279,6 +290,7 @@
                 document.getElementById("subject").value = ex.subject;
                 document.getElementById("difficulty").value = ex.difficulty;
                 document.getElementById("points").value = ex.pointsPerQuestion;
+                document.getElementById("time-limit").value = ex.timeLimit;
                 document.getElementById("passage").value = ex.passage;
                 document.getElementById("passage-group").style.display =
                     ex.type === EXERCISE_TYPE_READING ? "block" : "none";
@@ -343,6 +355,10 @@
                                 parseInt(
                                     document.getElementById("points").value,
                                 ) || DEFAULT_POINTS_PER_QUESTION,
+                            timeLimit:
+                                parseInt(
+                                    document.getElementById("time-limit").value,
+                                ) || 0,
                             passage:
                                 document
                                     .getElementById("passage")

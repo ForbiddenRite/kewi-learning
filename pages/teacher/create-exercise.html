@@ -1,123 +1,228 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Exercise – Kewi Learning</title>
-    <link rel="stylesheet" href="../../css/main.css">
-</head>
-<body>
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="../../index.html" class="navbar-brand">
-                <span class="logo-icon" aria-hidden="true">🥝</span>
-                <span class="brand-name">Kewi Learning</span>
-            </a>
-            <div class="navbar-actions">
-                <span id="nav-user-display" class="text-sm fw-semibold"></span>
-                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
-                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
-            </div>
-        </nav>
-    </header>
-    <div class="app-layout">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
-                <a href="exercises.html" class="sidebar-link"><span class="icon">📝</span> Exercises</a>
-                <a href="create-exercise.html" class="sidebar-link active"><span class="icon">➕</span> Create Exercise</a>
-                <a href="students.html" class="sidebar-link"><span class="icon">👥</span> Students</a>
-                <a href="reports.html" class="sidebar-link"><span class="icon">📈</span> Reports</a>
-                <a href="create-student.html" class="sidebar-link"><span class="icon">🎓</span> Add Student</a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create Exercise – Kewi Learning</title>
+        <link rel="stylesheet" href="../../css/main.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar">
+                <a href="../../index.html" class="navbar-brand">
+                    <span class="logo-icon" aria-hidden="true">🥝</span>
+                    <span class="brand-name">Kewi Learning</span>
+                </a>
+                <div class="navbar-actions">
+                    <span
+                        id="nav-user-display"
+                        class="text-sm fw-semibold"
+                    ></span>
+                    <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm"
+                        >Logout</a
+                    >
+                    <button
+                        class="btn btn-ghost btn-sm"
+                        onclick="toggleTheme()"
+                    >
+                        🌓
+                    </button>
+                </div>
             </nav>
-        </aside>
-        <main class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">Create New Exercise</h1>
-                <p class="page-subtitle">Build an interactive exercise for your students</p>
-            </div>
-
-            <form id="create-form" class="card">
-                <div class="card-body">
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label class="form-label" for="title">Title *</label>
-                            <input type="text" id="title" class="form-control" required maxlength="100">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="subject">Subject *</label>
-                            <select id="subject" class="form-control" required></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="description">Description</label>
-                        <textarea id="description" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="grid-3">
-                        <div class="form-group">
-                            <label class="form-label" for="type">Exercise Type *</label>
-                            <select id="type" class="form-control" required></select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="difficulty">Difficulty *</label>
-                            <select id="difficulty" class="form-control" required></select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="points">Points per Question</label>
-                            <input type="number" id="points" class="form-control" value="10" min="1" max="100">
-                        </div>
-                    </div>
-                    <div class="form-group" id="passage-group" style="display:none;">
-                        <label class="form-label" for="passage">Reading Passage</label>
-                        <textarea id="passage" class="form-control" rows="8" placeholder="Paste the reading text here..."></textarea>
-                    </div>
-
-                    <h3 class="mt-lg mb-md">Questions</h3>
-                    <div id="questions-container"></div>
-                    <button type="button" class="btn btn-outline mt-md" id="add-question-btn">➕ Add Question</button>
+        </header>
+        <div class="app-layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link"
+                        ><span class="icon">📊</span> Dashboard</a
+                    >
+                    <a href="exercises.html" class="sidebar-link"
+                        ><span class="icon">📝</span> Exercises</a
+                    >
+                    <a href="create-exercise.html" class="sidebar-link active"
+                        ><span class="icon">➕</span> Create Exercise</a
+                    >
+                    <a href="students.html" class="sidebar-link"
+                        ><span class="icon">👥</span> Students</a
+                    >
+                    <a href="reports.html" class="sidebar-link"
+                        ><span class="icon">📈</span> Reports</a
+                    >
+                    <a href="create-student.html" class="sidebar-link"
+                        ><span class="icon">🎓</span> Add Student</a
+                    >
+                </nav>
+            </aside>
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Create New Exercise</h1>
+                    <p class="page-subtitle">
+                        Build an interactive exercise for your students
+                    </p>
                 </div>
-                <div class="card-footer flex gap-md">
-                    <button type="submit" class="btn btn-primary">Create Exercise</button>
-                    <a href="exercises.html" class="btn btn-ghost">Cancel</a>
-                </div>
-            </form>
-        </main>
-    </div>
 
-    <script src="../../js/constants.js"></script>
-    <script src="../../data/users.js"></script>
-    <script src="../../data/exercises.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/utils.js"></script>
-    <script>
-        let questionCount = 0;
+                <form id="create-form" class="card">
+                    <div class="card-body">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label" for="title"
+                                    >Title *</label
+                                >
+                                <input
+                                    type="text"
+                                    id="title"
+                                    class="form-control"
+                                    required
+                                    maxlength="100"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="subject"
+                                    >Subject *</label
+                                >
+                                <select
+                                    id="subject"
+                                    class="form-control"
+                                    required
+                                ></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="description"
+                                >Description</label
+                            >
+                            <textarea
+                                id="description"
+                                class="form-control"
+                                rows="2"
+                            ></textarea>
+                        </div>
+                        <div class="grid-4">
+                            <div class="form-group">
+                                <label class="form-label" for="type"
+                                    >Exercise Type *</label
+                                >
+                                <select
+                                    id="type"
+                                    class="form-control"
+                                    required
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="difficulty"
+                                    >Difficulty *</label
+                                >
+                                <select
+                                    id="difficulty"
+                                    class="form-control"
+                                    required
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="points"
+                                    >Points per Question</label
+                                >
+                                <input
+                                    type="number"
+                                    id="points"
+                                    class="form-control"
+                                    value="10"
+                                    min="1"
+                                    max="100"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="time-limit"
+                                    >Time limit</label
+                                >
+                                <input
+                                    type="number"
+                                    id="time-limit"
+                                    class="form-control"
+                                    value="0"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="form-group"
+                            id="passage-group"
+                            style="display: none"
+                        >
+                            <label class="form-label" for="passage"
+                                >Reading Passage</label
+                            >
+                            <textarea
+                                id="passage"
+                                class="form-control"
+                                rows="8"
+                                placeholder="Paste the reading text here..."
+                            ></textarea>
+                        </div>
 
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!requireAuth(ROLE_TEACHER)) return;
-            const user = getCurrentUser();
+                        <h3 class="mt-lg mb-md">Questions</h3>
+                        <div id="questions-container"></div>
+                        <button
+                            type="button"
+                            class="btn btn-outline mt-md"
+                            id="add-question-btn"
+                        >
+                            ➕ Add Question
+                        </button>
+                    </div>
+                    <div class="card-footer flex gap-md">
+                        <button type="submit" class="btn btn-primary">
+                            Create Exercise
+                        </button>
+                        <a href="exercises.html" class="btn btn-ghost"
+                            >Cancel</a
+                        >
+                    </div>
+                </form>
+            </main>
+        </div>
 
-            // Populate selects
-            Object.entries(SUBJECTS).forEach(([k,v]) => {
-                document.getElementById("subject").innerHTML += `<option value="${k}">${v}</option>`;
-            });
+        <script src="../../js/constants.js"></script>
+        <script src="../../data/users.js"></script>
+        <script src="../../data/exercises.js"></script>
+        <script src="../../js/auth.js"></script>
+        <script src="../../js/utils.js"></script>
+        <script>
+            let questionCount = 0;
 
-            Object.entries(EXERCISE_TYPES).forEach(([k,v]) => {
-                document.getElementById("type").innerHTML += `<option value="${k}">${v}</option>`;
-            });
+            document.addEventListener("DOMContentLoaded", () => {
+                if (!requireAuth(ROLE_TEACHER)) return;
+                const user = getCurrentUser();
 
-            Object.entries(DIFFICULTIES).forEach(([k,v]) => {
-                document.getElementById("difficulty").innerHTML += `<option value="${k}">${v}</option>`;
-            });
+                // Populate selects
+                Object.entries(SUBJECTS).forEach(([k, v]) => {
+                    document.getElementById("subject").innerHTML +=
+                        `<option value="${k}">${v}</option>`;
+                });
 
-            document.getElementById("type").addEventListener("change", (e) => {
-                document.getElementById("passage-group").style.display =
-                    e.target.value === EXERCISE_TYPE_READING ? "block" : "none";
-            });
+                Object.entries(EXERCISE_TYPES).forEach(([k, v]) => {
+                    document.getElementById("type").innerHTML +=
+                        `<option value="${k}">${v}</option>`;
+                });
 
-            function addQuestion() {
-                questionCount++;
-                const id = "q_" + questionCount;
-                const html = `
+                Object.entries(DIFFICULTIES).forEach(([k, v]) => {
+                    document.getElementById("difficulty").innerHTML +=
+                        `<option value="${k}">${v}</option>`;
+                });
+
+                document
+                    .getElementById("type")
+                    .addEventListener("change", (e) => {
+                        document.getElementById("passage-group").style.display =
+                            e.target.value === EXERCISE_TYPE_READING
+                                ? "block"
+                                : "none";
+                    });
+
+                function addQuestion() {
+                    questionCount++;
+                    const id = "q_" + questionCount;
+                    const html = `
                     <div class="card mb-md" id="question-block-${questionCount}" data-qid="${id}">
                         <div class="card-body">
                             <div class="flex-between mb-md">
@@ -149,61 +254,102 @@
                         </div>
                     </div>
                 `;
-                document.getElementById("questions-container").insertAdjacentHTML("beforeend", html);
-            }
-
-            document.getElementById("add-question-btn").addEventListener("click", addQuestion);
-            addQuestion(); // start with one
-
-            document.getElementById("create-form").addEventListener("submit", (e) => {
-                e.preventDefault();
-                const blocks = document.querySelectorAll("[id^='question-block-']");
-                if (blocks.length === 0) {
-                    showToast("Add at least one question.", "error");
-                    return;
+                    document
+                        .getElementById("questions-container")
+                        .insertAdjacentHTML("beforeend", html);
                 }
-                const questions = [];
-                blocks.forEach((block, i) => {
-                    const text = block.querySelector(".q-text").value.trim();
-                    const type = block.querySelector(".q-type").value;
-                    const answer = block.querySelector(".q-answer").value.trim();
-                    const optionsRaw = block.querySelector(".q-options").value.trim();
-                    const q = {
-                        id: "q" + (i + 1),
-                        text,
-                        type,
-                        correctAnswer: answer
-                    };
-                    if (type === "multiple_choice" && optionsRaw) {
-                        q.options = optionsRaw.split("\n").map(o => o.trim()).filter(Boolean);
-                    }
-                    if (type === "true_false") {
-                        q.options = ["true", "false"];
-                    }
-                    questions.push(q);
-                });
 
-                const data = {
-                    title: document.getElementById("title").value.trim(),
-                    description: document.getElementById("description").value.trim(),
-                    type: document.getElementById("type").value,
-                    subject: document.getElementById("subject").value,
-                    difficulty: document.getElementById("difficulty").value,
-                    pointsPerQuestion: parseInt(document.getElementById("points").value) || DEFAULT_POINTS_PER_QUESTION,
-                    passage: document.getElementById("passage").value.trim() || null,
-                    questions,
-                    createdBy: user.id
-                };
+                document
+                    .getElementById("add-question-btn")
+                    .addEventListener("click", addQuestion);
+                addQuestion(); // start with one
 
-                try {
-                    createExercise(data);
-                    showToast("Exercise created successfully!", "success");
-                    setTimeout(() => window.location.href = "exercises.html", 800);
-                } catch (err) {
-                    showToast(err.message || "Failed to create exercise.", "error");
-                }
+                document
+                    .getElementById("create-form")
+                    .addEventListener("submit", (e) => {
+                        e.preventDefault();
+                        const blocks = document.querySelectorAll(
+                            "[id^='question-block-']",
+                        );
+                        if (blocks.length === 0) {
+                            showToast("Add at least one question.", "error");
+                            return;
+                        }
+                        const questions = [];
+                        blocks.forEach((block, i) => {
+                            const text = block
+                                .querySelector(".q-text")
+                                .value.trim();
+                            const type = block.querySelector(".q-type").value;
+                            const answer = block
+                                .querySelector(".q-answer")
+                                .value.trim();
+                            const optionsRaw = block
+                                .querySelector(".q-options")
+                                .value.trim();
+                            const q = {
+                                id: "q" + (i + 1),
+                                text,
+                                type,
+                                correctAnswer: answer,
+                            };
+                            if (type === "multiple_choice" && optionsRaw) {
+                                q.options = optionsRaw
+                                    .split("\n")
+                                    .map((o) => o.trim())
+                                    .filter(Boolean);
+                            }
+                            if (type === "true_false") {
+                                q.options = ["true", "false"];
+                            }
+                            questions.push(q);
+                        });
+
+                        const data = {
+                            title: document
+                                .getElementById("title")
+                                .value.trim(),
+                            description: document
+                                .getElementById("description")
+                                .value.trim(),
+                            type: document.getElementById("type").value,
+                            subject: document.getElementById("subject").value,
+                            difficulty:
+                                document.getElementById("difficulty").value,
+                            pointsPerQuestion:
+                                parseInt(
+                                    document.getElementById("points").value,
+                                ) || DEFAULT_POINTS_PER_QUESTION,
+                            timeLimit:
+                                parseInt(
+                                    document.getElementById("time-limit").value,
+                                ) || 0,
+                            passage:
+                                document
+                                    .getElementById("passage")
+                                    .value.trim() || null,
+                            questions,
+                            createdBy: user.id,
+                        };
+
+                        try {
+                            createExercise(data);
+                            showToast(
+                                "Exercise created successfully!",
+                                "success",
+                            );
+                            setTimeout(
+                                () => (window.location.href = "exercises.html"),
+                                800,
+                            );
+                        } catch (err) {
+                            showToast(
+                                err.message || "Failed to create exercise.",
+                                "error",
+                            );
+                        }
+                    });
             });
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
