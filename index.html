@@ -21,7 +21,7 @@
                     <span class="logo-icon" aria-hidden="true">🥝</span>
                     <span class="brand-name">Kewi Learning</span>
                 </a>
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" id="primary-nav">
                     <li>
                         <a href="index.html" class="nav-link active">Home</a>
                     </li>
@@ -29,21 +29,26 @@
                         <a href="pages/about.html" class="nav-link">About</a>
                     </li>
                     <li>
-                        <a href="pages/features.html" class="nav-link"
-                            >Features</a
-                        >
+                        <a href="pages/features.html" class="nav-link">Features</a>
                     </li>
                     <li>
-                        <a href="pages/subjects.html" class="nav-link"
-                            >Subjects</a
-                        >
+                        <a href="pages/subjects.html" class="nav-link">Subjects</a>
                     </li>
                     <li>
-                        <a href="pages/contact.html" class="nav-link"
-                            >Contact</a
-                        >
+                        <a href="pages/contact.html" class="nav-link">Contact</a>
                     </li>
                 </ul>
+                <button
+                    type="button"
+                    class="nav-toggle"
+                    id="nav-toggle"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-controls="primary-nav">
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                </button>
                 <div class="navbar-actions">
                     <a
                         href="pages/login.html"
@@ -87,17 +92,10 @@
                         teachers.
                     </p>
                     <div class="hero-actions">
-                        <a
-                            href="pages/login.html"
-                            class="btn btn-secondary btn-lg"
-                            >Get Started</a
-                        >
-                        <a
-                            href="pages/features.html"
-                            class="btn btn-outline btn-lg"
-                            style="border-color: #fff; color: #fff"
-                            >Explore Features</a
-                        >
+                        <a href="pages/login.html" class="btn btn-secondary btn-lg">
+                            Get Started</a>
+                        <a href="pages/features.html" class="btn btn-outline btn-lg" style="border-color: #fff; color: #fff">
+                            Explore Features</a>
                     </div>
                 </div>
             </section>
