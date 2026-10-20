@@ -25,14 +25,16 @@ const EXERCISE_TYPE_MCQ = "multiple_choice";
 const EXERCISE_TYPE_FILL_BLANK = "fill_blank";
 const EXERCISE_TYPE_TRUE_FALSE = "true_false";
 const EXERCISE_TYPE_READING = "reading_comprehension";
+const EXERCISE_TYPE_VIDEO = "video_comprehension";
 // const EXERCISE_TYPE_MATCHING = "matching"; // disabled: matching not implemented in exercise builder
 
 const EXERCISE_TYPES = {
-  [EXERCISE_TYPE_MCQ]: "Multiple Choice",
-  [EXERCISE_TYPE_FILL_BLANK]: "Fill in the Blank",
-  [EXERCISE_TYPE_TRUE_FALSE]: "True / False",
-  [EXERCISE_TYPE_READING]: "Reading Comprehension",
-  // [EXERCISE_TYPE_MATCHING]: "Matching" // disabled: matching not implemented in exercise builder
+    [EXERCISE_TYPE_MCQ]: "Multiple Choice",
+    [EXERCISE_TYPE_FILL_BLANK]: "Fill in the Blank",
+    [EXERCISE_TYPE_TRUE_FALSE]: "True / False",
+    [EXERCISE_TYPE_READING]: "Reading Comprehension",
+    [EXERCISE_TYPE_VIDEO]: "Video Comprehension",
+    // [EXERCISE_TYPE_MATCHING]: "Matching" // disabled: matching not implemented in exercise builder
 };
 
 // ========== Subjects ==========
@@ -43,11 +45,11 @@ const SUBJECT_HISTORY = "history";
 const SUBJECT_GENERAL = "general";
 
 const SUBJECTS = {
-  [SUBJECT_ENGLISH]: "English",
-  [SUBJECT_MATH]: "Mathematics",
-  [SUBJECT_SCIENCE]: "Science",
-  [SUBJECT_HISTORY]: "History",
-  [SUBJECT_GENERAL]: "General Knowledge",
+    [SUBJECT_ENGLISH]: "English",
+    [SUBJECT_MATH]: "Mathematics",
+    [SUBJECT_SCIENCE]: "Science",
+    [SUBJECT_HISTORY]: "History",
+    [SUBJECT_GENERAL]: "General Knowledge",
 };
 
 // ========== Difficulty Levels ==========
@@ -56,9 +58,9 @@ const DIFFICULTY_MEDIUM = "medium";
 const DIFFICULTY_HARD = "hard";
 
 const DIFFICULTIES = {
-  [DIFFICULTY_EASY]: "Easy",
-  [DIFFICULTY_MEDIUM]: "Medium",
-  [DIFFICULTY_HARD]: "Hard",
+    [DIFFICULTY_EASY]: "Easy",
+    [DIFFICULTY_MEDIUM]: "Medium",
+    [DIFFICULTY_HARD]: "Hard",
 };
 
 // ========== Status Codes ==========

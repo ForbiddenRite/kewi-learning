@@ -373,7 +373,9 @@ p {
     border: 2px solid var(--color-border);
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
 }
 
 .nav-toggle:hover {
@@ -387,7 +389,9 @@ p {
     height: 2px;
     background-color: var(--color-dark);
     border-radius: 1px;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
+    transition:
+        transform var(--transition-fast),
+        opacity var(--transition-fast);
 }
 
 [data-theme="dark"] .nav-toggle-bar {
@@ -1059,39 +1063,44 @@ p {
   align-items: center;
 }
 
-/* ========== Reading Comprehension Layout ========== */
-.reading-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
-  min-height: 60vh;
+/* ========== Reading and Video Comprehension Layout ========== */
+.reading-layout,
+.video-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    min-height: 60vh;
 }
 
-.reading-passage {
-  background-color: var(--color-white);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: calc(var(--header-height) + var(--space-md));
-  max-height: calc(100vh - var(--header-height) - var(--space-2xl));
-  overflow-y: auto;
+.reading-passage,
+.video-learning {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-md));
+    max-height: calc(100vh - var(--header-height) - var(--space-2xl));
+    overflow-y: auto;
 }
 
-.reading-passage h3 {
-  color: var(--color-primary);
-  margin-bottom: var(--space-lg);
+.reading-passage h3,
+.video-learning h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-lg);
 }
 
-.reading-passage p {
-  text-align: justify;
-  line-height: 1.8;
+.reading-passage p,
+.video-learning p {
+    text-align: justify;
+    line-height: 1.8;
 }
 
-.reading-questions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
+.reading-questions,
+.video-questions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
 }
 
 .question-card {

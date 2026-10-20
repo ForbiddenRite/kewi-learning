@@ -31,6 +31,7 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 type: "multiple_choice",
                 options: ["New Zealand", "China", "Italy", "Chile"],
                 correctAnswer: "China",
+                explanation: `The first paragraph states, 'Despite its name, the kiwi is not originally from New Zealand. It was first grown in China, where it was called the "Chinese gooseberry."'`,
             },
             {
                 id: "q2",
@@ -44,18 +45,23 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 ],
                 correctAnswer:
                     "After their national bird which is also brown and fuzzy",
+                explanation: `The passage explains that 'New Zealanders renamed it "kiwi" after their national bird, which is also brown and fuzzy.' This matches the appearance of the fruit.`,
             },
             {
                 id: "q3",
                 text: "Kiwi fruits contain more vitamin C than oranges.",
                 type: "true_false",
                 correctAnswer: "true",
+                explanation:
+                    "The second paragraph explicitly states, 'They contain more vitamin C than oranges,' making this statement true.",
             },
             {
                 id: "q4",
                 text: "According to the passage, farmers grow kiwis on ______, similar to grapes.",
                 type: "fill_blank",
                 correctAnswer: "vines",
+                explanation:
+                    "The third paragraph says, 'Farmers grow kiwis on vines, similar to grapes.'",
             },
             {
                 id: "q5",
@@ -63,6 +69,8 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 type: "multiple_choice",
                 options: ["Vitamin C", "Vitamin K", "Vitamin D", "Vitamin E"],
                 correctAnswer: "Vitamin D",
+                explanation:
+                    "The second paragraph lists the nutrients found in kiwi fruits, which include vitamin C, vitamin K, vitamin E, and dietary fiber. Vitamin D is NOT mentioned in the passage.",
             },
         ],
     },
@@ -142,18 +150,24 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                     "Collection",
                 ],
                 correctAnswer: "Evaporation",
+                explanation:
+                    "Evaporation is the process where liquid water absorbs heat energy and changes into a gas (water vapor). Burning is a chemical reaction involving fire and oxygen, not a phase change of water.",
             },
             {
                 id: "q2",
                 text: "Rain, snow, and hail are all forms of ______.",
                 type: "fill_blank",
                 correctAnswer: "precipitation",
+                explanation:
+                    "Precipitation is the general term for any water that falls from the atmosphere to the ground. This includes rain, snow, sleet, and hail.",
             },
             {
                 id: "q3",
                 text: "Clouds are formed by condensation of water vapor.",
                 type: "true_false",
                 correctAnswer: "true",
+                explanation:
+                    "Condensation occurs when water vapor (gas) in the air cools down and changes back into tiny liquid water droplets. These droplets gather together to form clouds.",
             },
             {
                 id: "q4",
@@ -161,6 +175,8 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 type: "multiple_choice",
                 options: ["The Moon", "The Sun", "Wind", "Ocean currents"],
                 correctAnswer: "The Sun",
+                explanation:
+                    "The Sun provides the heat energy necessary to evaporate water from oceans, lakes, and rivers, powering the entire cycle. While the Moon affects tides, it does not drive the water cycle.",
             },
         ],
     },
@@ -197,18 +213,24 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 type: "multiple_choice",
                 options: ["Egypt", "China", "Mesopotamia", "Rome"],
                 correctAnswer: "Mesopotamia",
+                explanation:
+                    "The Code of Hammurabi is one of the oldest deciphered writings of significant length in the world. It was created by the Babylonian King Hammurabi, who ruled in the ancient region of Mesopotamia.",
             },
             {
                 id: "q3",
                 text: "The Great Wall was primarily built by the Ancient Romans.",
                 type: "true_false",
                 correctAnswer: "false",
+                explanation:
+                    "This statement is false. The Great Wall of China was built by various Chinese dynasties over centuries to protect against northern invasions. The Ancient Romans built structures like Hadrian's Wall in Britain, not the Great Wall.",
             },
             {
                 id: "q4",
                 text: "Which river was central to the development of Ancient Egyptian civilization?",
                 type: "fill_blank",
                 correctAnswer: "Nile",
+                explanation:
+                    "The Nile River was central to Ancient Egyptian civilization. Its predictable annual flooding provided fertile soil for agriculture and was essential for transportation, making it the lifeline of the society.",
             },
         ],
     },
@@ -238,6 +260,8 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                     "Unable to be recycled",
                 ],
                 correctAnswer: "Able to be broken down by natural processes",
+                explanation:
+                    "If a material is biodegradable, it means that living organisms, such as bacteria or fungi, can break it down naturally into simpler, harmless substances over time, unlike materials like plastic that persist for centuries.",
             },
             {
                 id: "q2",
@@ -250,6 +274,8 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 text: "'Sustainable' means using resources in a way that preserves them for the future.",
                 type: "true_false",
                 correctAnswer: "true",
+                explanation:
+                    "Sustainability is the practice of using natural resources responsibly today so that they will still be available for future generations. Therefore, the statement is true.",
             },
             {
                 id: "q4",
@@ -257,12 +283,16 @@ Farmers grow kiwis on vines, similar to grapes. The plants need a mild climate a
                 type: "multiple_choice",
                 options: ["Biodiversity", "Pollution", "Erosion", "Habitat"],
                 correctAnswer: "Biodiversity",
+                explanation:
+                    "Biodiversity refers to the variety and variability of life on Earth. It encompasses the different species of plants, animals, and microorganisms living in a specific habitat or ecosystem.",
             },
             {
                 id: "q5",
                 text: "The opposite of 'renewable' energy is ______ energy.",
                 type: "fill_blank",
                 correctAnswer: "non-renewable",
+                explanation:
+                    "Renewable energy comes from sources that naturally replenish themselves, like sunlight or wind. The opposite, 'non-renewable' energy, comes from finite sources that will eventually run out, such as fossil fuels like coal, oil, and natural gas.",
             },
         ],
     },
@@ -338,18 +368,24 @@ The glucose produced is used by the plant for energy and growth, or stored as st
                 type: "multiple_choice",
                 options: ["Roots", "Stems", "Leaves", "Flowers"],
                 correctAnswer: "Leaves",
+                explanation:
+                    "The second paragraph states, 'The process takes place mainly in the leaves of plants, inside specialized structures called chloroplasts.'",
             },
             {
                 id: "q2",
                 text: "What is the green pigment that absorbs sunlight called?",
                 type: "fill_blank",
                 correctAnswer: "chlorophyll",
+                explanation:
+                    "According to the passage, 'Chloroplasts contain a green pigment called chlorophyll, which absorbs sunlight.'",
             },
             {
                 id: "q3",
                 text: "Photosynthesis produces oxygen as a byproduct.",
                 type: "true_false",
                 correctAnswer: "true",
+                explanation:
+                    "The final paragraph explains that 'The oxygen is released into the atmosphere as a byproduct,' making this statement true.",
             },
             {
                 id: "q4",
@@ -362,12 +398,16 @@ The glucose produced is used by the plant for energy and growth, or stored as st
                     "Starch and carbon dioxide",
                 ],
                 correctAnswer: "Glucose and oxygen",
+                explanation:
+                    "The chemical equation in the passage shows that the inputs (Carbon dioxide + Water + Light energy) are transformed into 'Glucose + Oxygen,' which are the two main products.",
             },
             {
                 id: "q5",
                 text: "Tiny pores on leaves that take in carbon dioxide are called ______.",
                 type: "fill_blank",
                 correctAnswer: "stomata",
+                explanation:
+                    "The second paragraph states that plants 'take in carbon dioxide from the air through tiny pores called stomata.'",
             },
         ],
     },
@@ -410,6 +450,65 @@ The glucose produced is used by the plant for energy and growth, or stored as st
                 type: "multiple_choice",
                 options: ["Go", "Gd", "Au", "Ag"],
                 correctAnswer: "Au",
+            },
+        ],
+    },
+    {
+        id: "ex_009",
+        title: "12 days of Christmas",
+        description:
+            "Listen to a short song and answer comprehension questions.",
+        type: "video_comprehension",
+        subject: "english",
+        difficulty: "easy",
+        pointsPerQuestion: 10,
+        createdBy: "u_teacher_001",
+        createdAt: "2026-10-14T12:00:00Z",
+        status: "active",
+        tags: ["video", "song", "funny"],
+        video: `https://youtu.be/m4OD9jCVxAs?si=DQA4qFxBDEFbJ7Ag`,
+        questions: [
+            {
+                id: "q1",
+                text: "On the first day of chirstmas, please Santa give to me... ___________.",
+                type: "fill_blank",
+                correctAnswer: "A jet-powered rocket ski",
+                explanation:
+                    "For more details, you can watch the cartoon of Phineas and Ferb, Christmas special.",
+            },
+            {
+                id: "q2",
+                text: "Which date didn't have a legit wish stated?",
+                type: "multiple_choice",
+                options: ["2nd", "5th", "9th", "12th"],
+                correctAnswer: "9th",
+                explanation: `Perry just do his "Grrr" which it doesn't mean anything.`,
+            },
+            {
+                id: "q3",
+                text: 'On the 11th day, what does "my own set of wheels" means?',
+                type: "multiple_choice",
+                options: [
+                    "A bicycle",
+                    "A tricycle",
+                    "A car",
+                    "A set of spare tires",
+                ],
+                correctAnswer: "A car",
+                explanation: `My own set of wheels means a car.`,
+            },
+            {
+                id: "q4",
+                text: "On the third day of Chistmas, please Santa give to me, a _________.",
+                type: "fill_blank",
+                correctAnswer: "sash full of patches",
+            },
+            {
+                id: "q5",
+                text: "For the 5th day guy, they rambled nonsense, interrupting the song's flow, and want to change his wish.",
+                type: "true_false",
+                correctAnswer: "true",
+                explanation: `Doofenshimirtz normally keeps rambling, going like "the entire tri-state area", "The entire tri-state area... at least a large portion of it, I-I don't wanna get to greedy", "The entire tri-state... You know, how about just two of the three states, that's fair, right? Deal?", "One single state! I-I feel like I was overreaching before, just-just one state area will be fine. ... Go on with the song", "FIVE GOLDEN RINGS~... You know I had to sing at that way at least once, it's tradition, and I'm traditional", "You know, promotion to Colornal sounds pretty sweet, is it, is it too late to change mine?", "You know it's way too much pressure being put on the spot for one thing to ask for this all powerful gift-giving saint, I'm just saying", and "How about just some almond brittle, that's a realistic request, right?"... And yes, each time the music stops and want to change his wish...`,
             },
         ],
     },
@@ -483,6 +582,7 @@ function createExercise(data) {
         status: STATUS_ACTIVE,
         tags: data.tags || [],
         passage: data.passage || null,
+        video: data.video || null,
         questions: data.questions || [],
     };
     exercises.push(newExercise);
