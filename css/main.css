@@ -356,6 +356,53 @@ p {
     gap: var(--space-md);
 }
 
+/* Hamburger toggle — hidden on desktop */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: var(--space-sm);
+    background: transparent;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.nav-toggle:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-bg-alt);
+}
+
+.nav-toggle-bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-dark);
+    border-radius: 1px;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+[data-theme="dark"] .nav-toggle-bar {
+    background-color: var(--color-text);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 /* ========== Buttons ========== */
 .btn {
     display: inline-flex;
@@ -1298,8 +1345,73 @@ p {
     .main-content {
         padding: var(--space-md);
     }
+    .navbar-brand .brand-name {
+        display: none;
+    }
+
+    /* Show hamburger; mobile nav as top-layer overlay */
+    .nav-toggle {
+        display: flex;
+        position: relative;
+        z-index: calc(var(--z-modal) + 2);
+    }
+
+    .navbar {
+        position: relative;
+    }
+
+    /* Dimmed backdrop behind the menu */
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: var(--z-modal);
+        background-color: rgba(33, 33, 33, 0.45);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+    }
+
+    .nav-overlay.is-open {
+        display: block;
+    }
+
+    /* Menu panel sits above the overlay */
     .navbar-nav {
         display: none;
+        position: fixed;
+        top: var(--header-height);
+        left: var(--space-md);
+        right: var(--space-md);
+        z-index: calc(var(--z-modal) + 1);
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-xs);
+        max-height: calc(100vh - var(--header-height) - var(--space-xl));
+        overflow-y: auto;
+        padding: var(--space-md);
+        /* Slightly opaque panel so page content shows faintly behind */
+        background-color: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-xl);
+    }
+
+    [data-theme="dark"] .navbar-nav {
+        background-color: rgba(45, 45, 45, 0.92);
+    }
+
+    .navbar-nav.is-open {
+        display: flex;
+    }
+
+    .navbar-nav .nav-link {
+        display: block;
+        width: 100%;
+        padding: var(--space-md);
+    }
+
+    .site-header {
+        z-index: calc(var(--z-modal) + 2);
     }
 }
 

@@ -1,44 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kewi Learning – Grow Your Knowledge Like a Kiwi</title>
-    <meta name="description" content="Kewi Learning is an interactive online learning platform for secondary students. Teachers create exercises, students learn and grow.">
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="index.html" class="navbar-brand">
-                <span class="logo-icon" aria-hidden="true">🥝</span>
-                <span>Kewi Learning</span>
-            </a>
-            <ul class="navbar-nav">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="pages/about.html" class="nav-link">About</a></li>
-                <li><a href="pages/features.html" class="nav-link">Features</a></li>
-                <li><a href="pages/subjects.html" class="nav-link">Subjects</a></li>
-                <li><a href="pages/contact.html" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="navbar-actions">
-                <a href="pages/login.html" id="nav-login-btn" class="btn btn-primary btn-sm">Login</a>
-                <a href="#" id="nav-dashboard-link" class="btn btn-outline btn-sm hidden">Dashboard</a>
-                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm hidden">Logout</a>
-                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark mode">🌓</button>
-            </div>
-        </nav>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kewi Learning – Grow Your Knowledge Like a Kiwi</title>
+        <meta
+            name="description"
+            content="Kewi Learning is an interactive online learning platform for secondary students. Teachers create exercises, students learn and grow."
+        />
+        <link rel="stylesheet" href="css/main.css" />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥝</text></svg>"
+        />
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar">
+                <a href="index.html" class="navbar-brand">
+                    <span class="logo-icon" aria-hidden="true">🥝</span>
+                    <span class="brand-name">Kewi Learning</span>
+                </a>
+                <ul class="navbar-nav" id="primary-nav">
+                    <li>
+                        <a href="index.html" class="nav-link active">Home</a>
+                    </li>
+                    <li>
+                        <a href="pages/about.html" class="nav-link">About</a>
+                    </li>
+                    <li>
+                        <a href="pages/features.html" class="nav-link">Features</a>
+                    </li>
+                    <li>
+                        <a href="pages/subjects.html" class="nav-link">Subjects</a>
+                    </li>
+                    <li>
+                        <a href="pages/contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                <button
+                    type="button"
+                    class="nav-toggle"
+                    id="nav-toggle"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-controls="primary-nav">
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                </button>
+                <div class="navbar-actions">
+                    <a
+                        href="pages/login.html"
+                        id="nav-login-btn"
+                        class="btn btn-primary btn-sm"
+                        >Login</a
+                    >
+                    <a
+                        href="#"
+                        id="nav-dashboard-link"
+                        class="btn btn-outline btn-sm hidden"
+                        >Dashboard</a
+                    >
+                    <a
+                        href="#"
+                        id="nav-logout-btn"
+                        class="btn btn-ghost btn-sm hidden"
+                        >Logout</a
+                    >
+                    <button
+                        class="btn btn-ghost btn-sm"
+                        onclick="toggleTheme()"
+                        title="Toggle theme"
+                        aria-label="Toggle dark mode"
+                    >
+                        🌓
+                    </button>
+                </div>
+            </nav>
+        </header>
 
-    <main>
-        <!-- Hero -->
-        <section class="hero">
-            <div class="container">
-                <h1>Welcome to Kewi Learning</h1>
-                <p>An interactive online learning platform where knowledge grows like a kiwi — fresh, vibrant, and full of potential. Designed for secondary students and their teachers.</p>
-                <div class="hero-actions">
-                    <a href="pages/login.html" class="btn btn-secondary btn-lg">Get Started</a>
-                    <a href="pages/features.html" class="btn btn-outline btn-lg" style="border-color:#fff;color:#fff;">Explore Features</a>
+        <main>
+            <!-- Hero -->
+            <section class="hero">
+                <div class="container">
+                    <h1>Welcome to Kewi Learning</h1>
+                    <p>
+                        An interactive online learning platform where knowledge
+                        grows like a kiwi — fresh, vibrant, and full of
+                        potential. Designed for secondary students and their
+                        teachers.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="pages/login.html" class="btn btn-secondary btn-lg">
+                            Get Started</a>
+                        <a href="pages/features.html" class="btn btn-outline btn-lg" style="border-color: #fff; color: #fff">
+                            Explore Features</a>
+                    </div>
                 </div>
             </div>
         </section>

@@ -300,24 +300,20 @@ function gradeAnswers(exercise, answers) {
     const details = [];
 
     questions.forEach((q) => {
-        const studentAnswer = (answers[q.id] || "")
-            .toString()
-            .trim()
-            .toLowerCase();
-        const correctAnswer = (q.correctAnswer || "")
-            .toString()
-            .trim()
-            .toLowerCase();
-        // For fill-blank allow minor flexibility
+        const studentAnswer = (answers[q.id] || "").toString().trim().toLowerCase();
+        const correctAnswer = (q.correctAnswer || "").toString().trim().toLowerCase();
         let isCorrect = false;
-        if (q.type === "fill_blank") {
-            isCorrect =
-                studentAnswer === correctAnswer ||
-                studentAnswer === correctAnswer.replace(/s$/, "") || // singular/plural
-                correctAnswer.includes(studentAnswer);
-        } else {
-            isCorrect = studentAnswer === correctAnswer;
+        
+        if (studentAnswer.length > 0 && correctAnswer.length > 0) {
+            if (q.type === "fill_blank") {
+                // Exact match only (case-insensitive, trimmed)
+                const singular = correctAnswer.replace(/s$/, "");
+                isCorrect = studentAnswer === correctAnswer || (singular.length > 0 && studentAnswer === singular);
+            } else {
+                isCorrect = studentAnswer === correctAnswer;
+            }
         }
+
         if (isCorrect) correctCount++;
         const explanation = (q.explanation || "").toString().trim();
         details.push({

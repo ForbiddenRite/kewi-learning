@@ -199,3 +199,59 @@ function calcPercentage(value, total) {
 
 // Init theme early
 initTheme();
+
+
+/**
+ * Mobile hamburger menu for public navbar (.navbar-nav)
+ * Opens as a top-layer panel with a dimmed opaque overlay behind it.
+ */
+function initNavToggle() {
+    var toggle = document.getElementById("nav-toggle");
+    var nav = document.querySelector(".navbar-nav");
+    if (!toggle || !nav) return;
+
+    // Ensure a single shared overlay exists
+    var overlay = document.querySelector(".nav-overlay");
+    if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.className = "nav-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.appendChild(overlay);
+    }
+
+    function setOpen(open) {
+        nav.classList.toggle("is-open", open);
+        overlay.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        document.body.style.overflow = open ? "hidden" : "";
+    }
+
+    toggle.addEventListener("click", function () {
+        setOpen(!nav.classList.contains("is-open"));
+    });
+
+    overlay.addEventListener("click", function () {
+        setOpen(false);
+    });
+
+    // Close menu when a nav link is clicked
+    nav.querySelectorAll(".nav-link").forEach(function (link) {
+        link.addEventListener("click", function () {
+            setOpen(false);
+        });
+    });
+
+    // Close on resize to desktop
+    window.addEventListener("resize", function () {
+        if (window.innerWidth > 992) {
+            setOpen(false);
+        }
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initNavToggle);
+} else {
+    initNavToggle();
+}

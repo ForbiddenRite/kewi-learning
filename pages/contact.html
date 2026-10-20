@@ -9,15 +9,30 @@
 <body>
     <header class="site-header">
         <nav class="navbar">
-            <a href="../index.html" class="navbar-brand"><span class="logo-icon" aria-hidden="true">🥝</span><span>Kewi Learning</span></a>
-            <ul class="navbar-nav">
+            <a href="../index.html" class="navbar-brand">
+                <span class="logo-icon" aria-hidden="true">🥝</span>
+                <span class="brand-name">Kewi Learning</span>
+            </a>
+            <ul class="navbar-nav" id="primary-nav">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="features.html" class="nav-link">Features</a></li>
                 <li><a href="subjects.html" class="nav-link">Subjects</a></li>
                 <li><a href="contact.html" class="nav-link active">Contact</a></li>
             </ul>
-            <div class="navbar-actions">
+                            <button
+                    type="button"
+                    class="nav-toggle"
+                    id="nav-toggle"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-controls="primary-nav"
+                >
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                </button>
+                <div class="navbar-actions">
                 <a href="login.html" id="nav-login-btn" class="btn btn-primary btn-sm">Login</a>
                 <a href="#" id="nav-dashboard-link" class="btn btn-outline btn-sm hidden">Dashboard</a>
                 <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm hidden">Logout</a>
