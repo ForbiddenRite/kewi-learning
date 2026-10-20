@@ -129,10 +129,10 @@ const DEFAULT_RESULTS = [
             q3: "true",
             q4: "The Sun",
         },
-        score: 40,
+        score: 20,
         maxScore: 40,
-        percentage: 100,
-        correctCount: 4,
+        percentage: 50,
+        correctCount: 2,
         totalQuestions: 4,
         details: [
             {
