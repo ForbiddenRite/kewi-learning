@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit Exercise – Kewi Learning</title>
+        <link rel="stylesheet" href="../../css/main.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar">
+                <a href="../../index.html" class="navbar-brand">
+                    <span class="logo-icon" aria-hidden="true">🥝</span>
+                    <span class="brand-name">Kewi Learning</span>
+                </a>
+                <div class="navbar-actions">
+                    <span
+                        id="nav-user-display"
+                        class="text-sm fw-semibold"
+                    ></span>
+                    <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm"
+                        >Logout</a
+                    >
+                    <button
+                        class="btn btn-ghost btn-sm"
+                        onclick="toggleTheme()"
+                    >
+                        🌓
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <div class="app-layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link"
+                        ><span class="icon">📊</span> Dashboard</a
+                    >
+                    <a href="exercises.html" class="sidebar-link active"
+                        ><span class="icon">📝</span> Exercises</a
+                    >
+                    <a href="create-exercise.html" class="sidebar-link"
+                        ><span class="icon">➕</span> Create Exercise</a
+                    >
+                    <a href="students.html" class="sidebar-link"
+                        ><span class="icon">👥</span> Students</a
+                    >
+                    <a href="reports.html" class="sidebar-link"
+                        ><span class="icon">📈</span> Reports</a
+                    >
+                    <a href="create-student.html" class="sidebar-link"
+                        ><span class="icon">🎓</span> Add Student</a
+                    >
+                </nav>
+            </aside>
+            <main class="main-content">
+                <div class="page-header">
+                    <h1 class="page-title">Edit Exercise</h1>
+                    <p class="page-subtitle">
+                        Build an interactive exercise for your students
+                    </p>
+                </div>
+
+                <form id="create-form" class="card">
+                    <div class="card-body">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label" for="title"
+                                    >Title *</label
+                                >
+                                <input
+                                    type="text"
+                                    id="title"
+                                    class="form-control"
+                                    required
+                                    maxlength="100"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="subject"
+                                    >Subject *</label
+                                >
+                                <select
+                                    id="subject"
+                                    class="form-control"
+                                    required
+                                ></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="description"
+                                >Description</label
+                            >
+                            <textarea
+                                id="description"
+                                class="form-control"
+                                rows="2"
+                            ></textarea>
+                        </div>
+                        <div class="grid-4">
+                            <div class="form-group">
+                                <label class="form-label" for="type"
+                                    >Exercise Type *</label
+                                >
+                                <select
+                                    id="type"
+                                    class="form-control"
+                                    required
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="difficulty"
+                                    >Difficulty *</label
+                                >
+                                <select
+                                    id="difficulty"
+                                    class="form-control"
+                                    required
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="points"
+                                    >Points per Question</label
+                                >
+                                <input
+                                    type="number"
+                                    id="points"
+                                    class="form-control"
+                                    value="10"
+                                    min="1"
+                                    max="100"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="time-limit"
+                                    >Time limit</label
+                                >
+                                <input
+                                    type="number"
+                                    id="time-limit"
+                                    class="form-control"
+                                    value="0"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+                        <div
+                            class="form-group"
+                            id="passage-group"
+                            style="display: none"
+                        >
+                            <label class="form-label" for="passage"
+                                >Reading Passage</label
+                            >
+                            <textarea
+                                id="passage"
+                                class="form-control"
+                                rows="8"
+                                placeholder="Paste the reading text here..."
+                            ></textarea>
+                        </div>
+
+                        <h3 class="mt-lg mb-md">Questions</h3>
+                        <div id="questions-container"></div>
+                        <button
+                            type="button"
+                            class="btn btn-outline mt-md"
+                            id="add-question-btn"
+                        >
+                            ➕ Add Question
+                        </button>
+                    </div>
+                    <div class="card-footer flex gap-md">
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                        <a href="exercises.html" class="btn btn-ghost"
+                            >Cancel</a
+                        >
+                    </div>
+                </form>
+            </main>
+        </div>
+
+        <script src="../../js/constants.js"></script>
+        <script src="../../data/users.js"></script>
+        <script src="../../data/results.js"></script>
+        <script src="../../data/exercises.js"></script>
+        <script src="../../js/auth.js"></script>
+        <script src="../../js/utils.js"></script>
+        <script>
+            let questionMax = 0;
+            let questionCount = 0;
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const id = getQueryParam("id");
+                const ex = findExerciseById(id);
+                if (!ex) {
+                    showToast("Exercise not found", "error");
+                    return;
+                }
+                if (!requireAuth(ROLE_TEACHER)) return;
+
+                const user = getCurrentUser();
+
+                // Populate selects
+                Object.entries(SUBJECTS).forEach(([k, v]) => {
+                    document.getElementById("subject").innerHTML +=
+                        `<option value="${k}">${v}</option>`;
+                });
+
+                Object.entries(EXERCISE_TYPES).forEach(([k, v]) => {
+                    document.getElementById("type").innerHTML +=
+                        `<option value="${k}">${v}</option>`;
+                });
+
+                Object.entries(DIFFICULTIES).forEach(([k, v]) => {
+                    document.getElementById("difficulty").innerHTML +=
+                        `<option value="${k}">${v}</option>`;
+                });
+
+                document
+                    .getElementById("type")
+                    .addEventListener("change", (e) => {
+                        document.getElementById("passage-group").style.display =
+                            e.target.value === EXERCISE_TYPE_READING
+                                ? "block"
+                                : "none";
+                    });
+                function getQuestionMax(c) {
+                    if (!c) {
+                        questionMax++;
+                    } else if (questionMax < c) {
+                        questionMax = c;
+                    }
+                    return questionMax;
+                }
+                function addQuestion(q) {
+                    questionCount++;
+                    const qMax = q
+                        ? getQuestionMax(Number(q.id.split("_")[1]))
+                        : getQuestionMax();
+                    const id = "q_" + qMax;
+                    const html = `
+                    <div class="card mb-md" id="question-block-${qMax}" data-qid="${id}">
+                        <div class="card-body">
+                            <div class="flex-between mb-md">
+                                <h4>Question ${qMax}</h4>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="this.closest('.card').remove(); questionCount--;">Remove</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Question Text *</label>
+                                <input type="text" class="form-control q-text" value="${q ? escapeHtml(q.text) : ""}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Type</label>
+                                <select class="form-control q-type">
+                                    <option value="multiple_choice" ${q.type == "multiple_choice" ? "selected" : ""} >Multiple Choice</option>
+                                    <option value="true_false" ${q.type == "true_false" ? "selected" : ""} >True / False</option>
+                                    <option value="fill_blank" ${q.type == "fill_blank" ? "selected" : ""} >Fill in the Blank</option>
+                                </select>
+                            </div>
+                            <div class="q-options-area">
+                                <div class="form-group">
+                                    <label class="form-label">Options (one per line, for MCQ)</label>
+                                    <textarea class="form-control q-options" rows="3" placeholder="Option A&#10;Option B&#10;Option C&#10;Option D">${(q.options || []).map((o) => escapeHtml(o)).join("\n")}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Correct Answer *</label>
+                                <input type="text" class="form-control q-answer" required placeholder="Exact correct answer" value="${escapeHtml(q.correctAnswer)}">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    document
+                        .getElementById("questions-container")
+                        .insertAdjacentHTML("beforeend", html);
+                }
+
+                //Create Questions from the data
+                (ex.questions || []).map((q, i) => {
+                    addQuestion(q);
+                });
+
+                //Fill in the properties for the Exercise
+                document.getElementById("title").value = ex.title;
+                document.getElementById("description").value = ex.description;
+                document.getElementById("type").value = ex.type;
+                document.getElementById("subject").value = ex.subject;
+                document.getElementById("difficulty").value = ex.difficulty;
+                document.getElementById("points").value = ex.pointsPerQuestion;
+                document.getElementById("time-limit").value = ex.timeLimit;
+                document.getElementById("passage").value = ex.passage;
+                document.getElementById("passage-group").style.display =
+                    ex.type === EXERCISE_TYPE_READING ? "block" : "none";
+
+                document
+                    .getElementById("add-question-btn")
+                    .addEventListener("click", addQuestion);
+
+                document
+                    .getElementById("create-form")
+                    .addEventListener("submit", (e) => {
+                        e.preventDefault();
+                        const blocks = document.querySelectorAll(
+                            "[id^='question-block-']",
+                        );
+                        if (blocks.length === 0) {
+                            showToast("Add at least one question.", "error");
+                            return;
+                        }
+                        const questions = [];
+                        blocks.forEach((block, i) => {
+                            const text = block
+                                .querySelector(".q-text")
+                                .value.trim();
+                            const type = block.querySelector(".q-type").value;
+                            const answer = block
+                                .querySelector(".q-answer")
+                                .value.trim();
+                            const optionsRaw = block
+                                .querySelector(".q-options")
+                                .value.trim();
+                            const q = {
+                                id: "q" + (i + 1),
+                                text,
+                                type,
+                                correctAnswer: answer,
+                            };
+                            if (type === "multiple_choice" && optionsRaw) {
+                                q.options = optionsRaw
+                                    .split("\n")
+                                    .map((o) => o.trim())
+                                    .filter(Boolean);
+                            }
+                            if (type === "true_false") {
+                                q.options = ["true", "false"];
+                            }
+                            questions.push(q);
+                        });
+
+                        const data = {
+                            title: document
+                                .getElementById("title")
+                                .value.trim(),
+                            description: document
+                                .getElementById("description")
+                                .value.trim(),
+                            type: document.getElementById("type").value,
+                            subject: document.getElementById("subject").value,
+                            difficulty:
+                                document.getElementById("difficulty").value,
+                            pointsPerQuestion:
+                                parseInt(
+                                    document.getElementById("points").value,
+                                ) || DEFAULT_POINTS_PER_QUESTION,
+                            timeLimit:
+                                parseInt(
+                                    document.getElementById("time-limit").value,
+                                ) || 0,
+                            passage:
+                                document
+                                    .getElementById("passage")
+                                    .value.trim() || null,
+                            questions,
+                            createdBy: user.id,
+                            oid: ex.id,
+                        };
+
+                        try {
+                            if (checkExerciseChanged(ex.id, data)) {
+                                editExercise(data);
+                                showToast(
+                                    "Exercise updated successfully!",
+                                    "success",
+                                );
+                                setTimeout(
+                                    () =>
+                                        (window.location.href =
+                                            "exercises.html"),
+                                    800,
+                                );
+                            } else {
+                                showToast(
+                                    "No changes in the Exercise",
+                                    "success",
+                                );
+                            }
+                        } catch (err) {
+                            console.log(err);
+                            showToast(
+                                err.message || "Failed to create exercise.",
+                                "error",
+                            );
+                        }
+                    });
+            });
+        </script>
+    </body>
+</html>
