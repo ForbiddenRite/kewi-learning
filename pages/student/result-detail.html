@@ -1,91 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result Detail – Kewi Learning</title>
-    <link rel="stylesheet" href="../../css/main.css">
-</head>
-<body>
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="../../index.html" class="navbar-brand">
-                <span class="logo-icon" aria-hidden="true">🥝</span>
-                <span class="brand-name">Kewi Learning</span>
-            </a>
-            <div class="navbar-actions">
-                <span id="nav-user-display" class="text-sm fw-semibold"></span>
-                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
-                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
-            </div>
-        </nav>
-    </header>
-    <main class="container" style="padding-top:var(--space-xl);padding-bottom:var(--space-2xl);" id="content">
-        <div class="loading-overlay"><div class="spinner"></div></div>
-    </main>
-    <script src="../../js/constants.js"></script>
-    <script src="../../data/users.js"></script>
-    <script src="../../data/exercises.js"></script>
-    <script src="../../data/results.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/utils.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!requireAuth(ROLE_STUDENT)) return;
-            const user = getCurrentUser();
-            const id = getQueryParam("id");
-            const results = getResults();
-            const result = results.find(r => r.id === id);
-            const container = document.getElementById("content");
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Result Detail – Kewi Learning</title>
+        <link rel="stylesheet" href="../../css/main.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar">
+                <a href="../../index.html" class="navbar-brand"
+                    ><span class="logo-icon" aria-hidden="true">🥝</span
+                    ><span>Kewi Learning</span></a
+                >
+                <div class="navbar-actions">
+                    <span
+                        id="nav-user-display"
+                        class="text-sm fw-semibold"
+                    ></span>
+                    <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm"
+                        >Logout</a
+                    >
+                    <button
+                        class="btn btn-ghost btn-sm"
+                        onclick="toggleTheme()"
+                    >
+                        🌓
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main
+            class="container"
+            style="
+                padding-top: var(--space-xl);
+                padding-bottom: var(--space-2xl);
+            "
+            id="content"
+        >
+            <div class="loading-overlay"><div class="spinner"></div></div>
+        </main>
+        <script src="../../js/constants.js"></script>
+        <script src="../../data/users.js"></script>
+        <script src="../../data/exercises.js"></script>
+        <script src="../../data/results.js"></script>
+        <script src="../../js/auth.js"></script>
+        <script src="../../js/utils.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                if (!requireAuth(ROLE_STUDENT)) return;
+                const user = getCurrentUser();
+                const id = getQueryParam("id");
+                const results = getResults();
+                const result = results.find((r) => r.id === id);
+                const container = document.getElementById("content");
 
-            if (!result || result.studentId !== user.id) {
-                container.innerHTML = '<div class="alert alert-error">Result not found.</div><a href="results.html" class="btn btn-outline">Back</a>';
-                return;
-            }
-            const ex = findExerciseById(result.exerciseId);
-            const passed = result.percentage >= PASSING_SCORE_PERCENT;
+                if (!result || result.studentId !== user.id) {
+                    container.innerHTML =
+                        '<div class="alert alert-error">Result not found.</div><a href="results.html" class="btn btn-outline">Back</a>';
+                    return;
+                }
+                const ex = findExerciseById(result.exerciseId);
+                const passed = result.percentage >= PASSING_SCORE_PERCENT;
 
-            let detailsHtml = "";
-            if (result.details && ex) {
-                detailsHtml = result.details.map((d, i) => {
-                    const q = (ex.questions || []).find(qq => qq.id === d.questionId);
-                    return `
-                        <div class="question-card" style="border-left-color:${d.isCorrect ? 'var(--color-success)' : 'var(--color-error)'}">
-                            <div class="question-number">Q${i+1}. ${escapeHtml(q ? q.text : d.questionId)}</div>
-                            <div class="mt-sm">
-                                <span class="text-sm">Your answer: <strong>${escapeHtml(d.studentAnswer || "(blank)")}</strong></span>
-                                ${d.isCorrect
-                                    ? '<span class="badge badge-success ml-sm">Correct</span>'
-                                    : `<span class="badge badge-error ml-sm">Incorrect</span>
-                                       <div class="text-sm text-muted mt-xs">Correct answer: ${escapeHtml(d.correctAnswer)}</div>`
-                                }
+                let detailsHtml = "";
+                if (result.details && ex) {
+                    detailsHtml = result.details
+                        .map((d, i) => {
+                            const q = (ex.questions || []).find(
+                                (qq) => qq.id === d.questionId,
+                            );
+                            return `
+                            <div class="question-card" style="border-left-color:${d.isCorrect ? "var(--color-success)" : "var(--color-error)"}">
+                                <div class="question-number">Q${i + 1}. ${escapeHtml(q ? q.text : d.questionId)}</div>
+                                <div class="mt-sm">
+                                    <span class="text-sm">Your answer: <strong>${escapeHtml(d.studentAnswer || "(blank)")}</strong></span>
+                                        ${
+                                            d.isCorrect
+                                                ? '<span class="badge badge-success ml-sm">Correct</span>'
+                                                : `<span class="badge badge-error ml-sm">Incorrect</span> <div class="text-sm text-muted mt-xs">Correct answer: ${escapeHtml(d.correctAnswer)}</div>`
+                                        }
+                                        <div class="text-sm">Explanation: <strong>${escapeHtml(q.explanation || "(blank)")}</strong></div>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                }).join("");
-            }
+                            `;
+                        })
+                        .join("");
+                }
 
-            container.innerHTML = `
+                container.innerHTML = `
                 <a href="results.html" class="btn btn-sm btn-ghost mb-md">← Back to Results</a>
                 <div class="card mb-xl">
                     <div class="card-body text-center" style="padding:var(--space-2xl);">
                         <div style="font-size:4rem;">${passed ? "🎉" : "📝"}</div>
                         <h1>${escapeHtml(ex ? ex.title : "Exercise")}</h1>
-                        <div style="font-size:var(--font-size-4xl);font-weight:bold;color:${passed ? 'var(--color-success)' : 'var(--color-warning)'};">
+                        <div style="font-size:var(--font-size-4xl);font-weight:bold;color:${passed ? "var(--color-success)" : "var(--color-warning)"};">
                             ${result.percentage}%
                         </div>
                         <p class="text-muted">${result.score} / ${result.maxScore} points · ${result.correctCount} of ${result.totalQuestions} correct</p>
                         <p class="text-sm text-muted">Submitted ${formatDateTime(result.submittedAt)}</p>
-                        ${passed
-                            ? '<div class="alert alert-success mt-md" style="display:inline-block;">Passed! Great work!</div>'
-                            : '<div class="alert alert-warning mt-md" style="display:inline-block;">Keep practising — you can do better next time!</div>'
+                        ${
+                            passed
+                                ? '<div class="alert alert-success mt-md" style="display:inline-block;">Passed! Great work!</div>'
+                                : '<div class="alert alert-warning mt-md" style="display:inline-block;">Keep practising — you can do better next time!</div>'
                         }
                     </div>
                 </div>
                 <h3 class="section-title">Answer Review</h3>
                 <div class="flex-col gap-md">${detailsHtml || "<p class='text-muted'>Detailed breakdown not available for this result.</p>"}</div>
             `;
-        });
-    </script>
-</body>
+            });
+        </script>
+    </body>
 </html>

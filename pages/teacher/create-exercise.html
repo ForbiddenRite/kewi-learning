@@ -9,10 +9,10 @@
     <body>
         <header class="site-header">
             <nav class="navbar">
-                <a href="../../index.html" class="navbar-brand">
-                    <span class="logo-icon" aria-hidden="true">🥝</span>
-                    <span class="brand-name">Kewi Learning</span>
-                </a>
+                <a href="../../index.html" class="navbar-brand"
+                    ><span class="logo-icon" aria-hidden="true">🥝</span
+                    ><span>Kewi Learning</span></a
+                >
                 <div class="navbar-actions">
                     <span
                         id="nav-user-display"
@@ -97,7 +97,7 @@
                                 rows="2"
                             ></textarea>
                         </div>
-                        <div class="grid-4">
+                        <div class="grid-3">
                             <div class="form-group">
                                 <label class="form-label" for="type"
                                     >Exercise Type *</label
@@ -131,18 +131,6 @@
                                     max="100"
                                 />
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="time-limit"
-                                    >Time limit</label
-                                >
-                                <input
-                                    type="number"
-                                    id="time-limit"
-                                    class="form-control"
-                                    value="0"
-                                    min="0"
-                                />
-                            </div>
                         </div>
                         <div
                             class="form-group"
@@ -158,6 +146,23 @@
                                 rows="8"
                                 placeholder="Paste the reading text here..."
                             ></textarea>
+                        </div>
+
+                        <!-- Elton added this div -->
+                        <div
+                            class="form-group"
+                            id="video-group"
+                            style="display: none"
+                        >
+                            <label class="form-label" for="video"
+                                >Paste Video URL here (must use the link in
+                                share)</label
+                            >
+                            <input
+                                type="text"
+                                id="video"
+                                class="form-control"
+                            />
                         </div>
 
                         <h3 class="mt-lg mb-md">Questions</h3>
@@ -218,10 +223,19 @@
                                 ? "block"
                                 : "none";
                     });
+                document
+                    .getElementById("type")
+                    .addEventListener("change", (e) => {
+                        document.getElementById("video-group").style.display =
+                            e.target.value === EXERCISE_TYPE_VIDEO
+                                ? "block"
+                                : "none";
+                    });
 
                 function addQuestion() {
                     questionCount++;
                     const id = "q_" + questionCount;
+                    const type = document.getElementById("type").value;
                     const html = `
                     <div class="card mb-md" id="question-block-${questionCount}" data-qid="${id}">
                         <div class="card-body">
@@ -236,9 +250,9 @@
                             <div class="form-group">
                                 <label class="form-label">Type</label>
                                 <select class="form-control q-type">
-                                    <option value="multiple_choice">Multiple Choice</option>
-                                    <option value="true_false">True / False</option>
-                                    <option value="fill_blank">Fill in the Blank</option>
+                                    <option value="multiple_choice" ${type === "multiple_choice" ? "selected" : ""}>Multiple Choice</option>
+                                    <option value="true_false" ${type === "true_false" ? "selected" : ""}>True / False</option>
+                                    <option value="fill_blank" ${type === "fill_blank" ? "selected" : ""}>Fill in the Blank</option>
                                 </select>
                             </div>
                             <div class="q-options-area">
@@ -250,6 +264,10 @@
                             <div class="form-group">
                                 <label class="form-label">Correct Answer *</label>
                                 <input type="text" class="form-control q-answer" required placeholder="Exact correct answer">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Explanation</label>
+                                <textarea class="form-control q-explain" rows="2"></textarea>
                             </div>
                         </div>
                     </div>
@@ -284,6 +302,9 @@
                             const answer = block
                                 .querySelector(".q-answer")
                                 .value.trim();
+                            const explain = block
+                                .querySelector(".q-explain")
+                                .value.trim();
                             const optionsRaw = block
                                 .querySelector(".q-options")
                                 .value.trim();
@@ -292,6 +313,7 @@
                                 text,
                                 type,
                                 correctAnswer: answer,
+                                explanation: explain,
                             };
                             if (type === "multiple_choice" && optionsRaw) {
                                 q.options = optionsRaw
@@ -320,14 +342,13 @@
                                 parseInt(
                                     document.getElementById("points").value,
                                 ) || DEFAULT_POINTS_PER_QUESTION,
-                            timeLimit:
-                                parseInt(
-                                    document.getElementById("time-limit").value,
-                                ) || 0,
                             passage:
                                 document
                                     .getElementById("passage")
                                     .value.trim() || null,
+                            video:
+                                document.getElementById("video").value.trim() ||
+                                null,
                             questions,
                             createdBy: user.id,
                         };

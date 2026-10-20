@@ -1,81 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise Detail – Kewi Learning</title>
-    <link rel="stylesheet" href="../../css/main.css">
-</head>
-<body>
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="../../index.html" class="navbar-brand">
-                <span class="logo-icon" aria-hidden="true">🥝</span>
-                <span class="brand-name">Kewi Learning</span>
-            </a>
-            <div class="navbar-actions">
-                <span id="nav-user-display" class="text-sm fw-semibold"></span>
-                <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm">Logout</a>
-                <button class="btn btn-ghost btn-sm" onclick="toggleTheme()">🌓</button>
-            </div>
-        </nav>
-    </header>
-    <div class="app-layout">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="sidebar-link"><span class="icon">📊</span> Dashboard</a>
-                <a href="exercises.html" class="sidebar-link active"><span class="icon">📝</span> Exercises</a>
-                <a href="create-exercise.html" class="sidebar-link"><span class="icon">➕</span> Create Exercise</a>
-                <a href="students.html" class="sidebar-link"><span class="icon">👥</span> Students</a>
-                <a href="reports.html" class="sidebar-link"><span class="icon">📈</span> Reports</a>
-                <a href="create-student.html" class="sidebar-link"><span class="icon">🎓</span> Add Student</a>
-            </nav>
-        </aside>
-        <main class="main-content">
-            <div id="content">
-                <div class="loading-overlay"><div class="spinner"></div></div>
-            </div>
-        </main>
-    </div>
-    <script src="../../js/constants.js"></script>
-    <script src="../../data/users.js"></script>
-    <script src="../../data/exercises.js"></script>
-    <script src="../../data/results.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/utils.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!requireAuth(ROLE_TEACHER)) return;
-            const id = getQueryParam("id");
-            const ex = findExerciseById(id);
-            const container = document.getElementById("content");
-            if (!ex) {
-                container.innerHTML = '<div class="alert alert-error">Exercise not found.</div><a href="exercises.html" class="btn btn-outline">Back</a>';
-                return;
-            }
-            const results = getResultsByExercise(ex.id);
-            const maxScore = getExerciseMaxScore(ex);
-
-            let questionsHtml = (ex.questions || []).map((q, i) => `
-                <div class="question-card mb-md">
-                    <div class="question-number">Q${i+1}. ${escapeHtml(q.text)}</div>
-                    <div class="text-sm text-muted">Type: ${EXERCISE_TYPES[q.type] || q.type}</div>
-                    ${q.options ? `<div class="text-sm mt-sm">Options: ${q.options.map(o => escapeHtml(o)).join(" · ")}</div>` : ""}
-                    <div class="text-sm mt-sm"><strong>Answer:</strong> ${escapeHtml(q.correctAnswer)}</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Exercise Detail – Kewi Learning</title>
+        <link rel="stylesheet" href="../../css/main.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="navbar">
+                <a href="../../index.html" class="navbar-brand"
+                    ><span class="logo-icon" aria-hidden="true">🥝</span
+                    ><span>Kewi Learning</span></a
+                >
+                <div class="navbar-actions">
+                    <span
+                        id="nav-user-display"
+                        class="text-sm fw-semibold"
+                    ></span>
+                    <a href="#" id="nav-logout-btn" class="btn btn-ghost btn-sm"
+                        >Logout</a
+                    >
+                    <button
+                        class="btn btn-ghost btn-sm"
+                        onclick="toggleTheme()"
+                    >
+                        🌓
+                    </button>
                 </div>
-            `).join("");
+            </nav>
+        </header>
+        <div class="app-layout">
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="sidebar-link"
+                        ><span class="icon">📊</span> Dashboard</a
+                    >
+                    <a href="exercises.html" class="sidebar-link active"
+                        ><span class="icon">📝</span> Exercises</a
+                    >
+                    <a href="create-exercise.html" class="sidebar-link"
+                        ><span class="icon">➕</span> Create Exercise</a
+                    >
+                    <a href="students.html" class="sidebar-link"
+                        ><span class="icon">👥</span> Students</a
+                    >
+                    <a href="reports.html" class="sidebar-link"
+                        ><span class="icon">📈</span> Reports</a
+                    >
+                    <a href="create-student.html" class="sidebar-link"
+                        ><span class="icon">🎓</span> Add Student</a
+                    >
+                </nav>
+            </aside>
+            <main class="main-content">
+                <div id="content">
+                    <div class="loading-overlay">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <script src="../../js/constants.js"></script>
+        <script src="../../data/users.js"></script>
+        <script src="../../data/exercises.js"></script>
+        <script src="../../data/results.js"></script>
+        <script src="../../js/auth.js"></script>
+        <script src="../../js/utils.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                if (!requireAuth(ROLE_TEACHER)) return;
+                const id = getQueryParam("id");
+                const ex = findExerciseById(id);
+                const container = document.getElementById("content");
+                if (!ex) {
+                    container.innerHTML =
+                        '<div class="alert alert-error">Exercise not found.</div><a href="exercises.html" class="btn btn-outline">Back</a>';
+                    return;
+                }
+                const results = getResultsByExercise(ex.id);
+                const maxScore = getExerciseMaxScore(ex);
 
-            let resultsHtml = results.length ? results.map(r => {
-                const s = findUserById(r.studentId);
-                return `<tr>
+                let questionsHtml = (ex.questions || [])
+                    .map(
+                        (q, i) => `
+                <div class="question-card mb-md">
+                    <div class="question-number">Q${i + 1}. ${escapeHtml(q.text)}</div>
+                    <div class="text-sm text-muted">Type: ${EXERCISE_TYPES[q.type] || q.type}</div>
+                    ${q.options ? `<div class="text-sm mt-sm">Options: ${q.options.map((o) => escapeHtml(o)).join(" · ")}</div>` : ""}
+                    <div class="text-sm mt-sm"><strong>Answer:</strong> ${escapeHtml(q.correctAnswer)}</div>
+                    <div class="text-sm mt-sm"><strong>Explanation:</strong> ${escapeHtml(q.explanation || "(blank)")}</div>
+                </div>
+            `,
+                    )
+                    .join("");
+
+                let resultsHtml = results.length
+                    ? results
+                          .map((r) => {
+                              const s = findUserById(r.studentId);
+                              return `<tr>
                     <td>${escapeHtml(s ? s.fullName : "Unknown")}</td>
                     <td>${r.score}/${r.maxScore}</td>
                     <td>${getScoreBadge(r.percentage)}</td>
                     <td>${formatDateTime(r.submittedAt)}</td>
+                    <td><a href="result-detail.html?id=${r.exerciseId}&studentId=${r.studentId}" class="btn btn-sm btn-outline">Details</a></td>
                 </tr>`;
-            }).join("") : '<tr><td colspan="4" class="text-center text-muted">No submissions yet.</td></tr>';
+                          })
+                          .join("")
+                    : '<tr><td colspan="4" class="text-center text-muted">No submissions yet.</td></tr>';
 
-            container.innerHTML = `
+                container.innerHTML = `
                 <div class="page-header">
                     <a href="exercises.html" class="btn btn-sm btn-ghost mb-md">← Back to Exercises</a>
                     <h1 class="page-title">${escapeHtml(ex.title)}</h1>
@@ -83,17 +118,21 @@
                         ${getSubjectBadge(ex.subject)}
                         ${getTypeBadge(ex.type)}
                         ${getDifficultyBadge(ex.difficulty)}
-                        <span class="badge badge-info">${(ex.questions||[]).length} questions</span>
+                        <span class="badge badge-info">${(ex.questions || []).length} questions</span>
                         <span class="badge badge-primary">${maxScore} pts</span>
                     </div>
                 </div>
                 ${ex.description ? `<p class="text-muted mb-lg">${escapeHtml(ex.description)}</p>` : ""}
-                ${ex.passage ? `
+                ${
+                    ex.passage
+                        ? `
                     <div class="card mb-xl">
                         <div class="card-header"><h3>Reading Passage</h3></div>
                         <div class="card-body"><p style="white-space:pre-wrap;line-height:1.8;">${escapeHtml(ex.passage)}</p></div>
                     </div>
-                ` : ""}
+                `
+                        : ""
+                }
                 <h3 class="section-title">Questions</h3>
                 ${questionsHtml}
                 <h3 class="section-title mt-xl">Submissions (${results.length})</h3>
@@ -104,7 +143,7 @@
                     </table>
                 </div>
             `;
-        });
-    </script>
-</body>
+            });
+        </script>
+    </body>
 </html>

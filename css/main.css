@@ -443,18 +443,6 @@ p {
     width: 100%;
 }
 
-.btn-toggle-enabled {
-    font-size: 34px;
-    color: var(--color-primary);
-    transform: scaleX(1.1);
-}
-
-.btn-toggle-disabled {
-    font-size: 34px;
-    color: var(--color-error);
-    transform: scaleX(1.1);
-}
-
 /* ========== Cards ========== */
 .card {
     background-color: var(--color-white);
@@ -993,15 +981,17 @@ p {
     align-items: center;
 }
 
-/* ========== Reading Comprehension Layout ========== */
-.reading-layout {
+/* ========== Reading and Video Comprehension Layout ========== */
+.reading-layout,
+.video-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-xl);
     min-height: 60vh;
 }
 
-.reading-passage {
+.reading-passage,
+.video-learning {
     background-color: var(--color-white);
     border-radius: var(--radius-lg);
     padding: var(--space-xl);
@@ -1012,17 +1002,20 @@ p {
     overflow-y: auto;
 }
 
-.reading-passage h3 {
+.reading-passage h3,
+.video-learning h3 {
     color: var(--color-primary);
     margin-bottom: var(--space-lg);
 }
 
-.reading-passage p {
+.reading-passage p,
+.video-learning p {
     text-align: justify;
     line-height: 1.8;
 }
 
-.reading-questions {
+.reading-questions,
+.video-questions {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
@@ -1042,7 +1035,7 @@ p {
     margin-bottom: var(--space-sm);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .reading-layout {
         grid-template-columns: 1fr;
     }
@@ -1291,7 +1284,7 @@ p {
 }
 
 /* ========== Responsive Sidebar ========== */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .sidebar {
         position: fixed;
         left: -100%;
@@ -1304,9 +1297,6 @@ p {
     }
     .main-content {
         padding: var(--space-md);
-    }
-    .navbar-brand .brand-name {
-        display: none;
     }
     .navbar-nav {
         display: none;
@@ -1336,56 +1326,4 @@ p {
     text-transform: none;
     letter-spacing: 0;
     font-size: var(--font-size-xs);
-}
-
-/* ========== Exercise timer========== */
-#ex-timeline-container {
-    display: none;
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-md));
-    background-color: var(--color-earth);
-    height: 5rem;
-    justify-content: right;
-    align-items: center;
-    border-radius: var(--radius-lg);
-    margin: 1rem 0 0;
-    .timeline {
-        width: 300px;
-        margin-left: 1rem;
-        margin-right: 1rem;
-        .text-row {
-            display: flex;
-            justify-content: end;
-            gap: 1rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            .time-text {
-                color: var(--color-text);
-            }
-            .current {
-                color: var(--color-text);
-            }
-            .max-time {
-                color: var(--color-text);
-            }
-        }
-
-        .track {
-            width: 100%;
-            height: 1rem;
-            background: var(--color-primary-dark);
-            position: relative;
-            .line {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                background: var(--color-primary-light);
-                transform-origin: left;
-                transition: transform 1s linear;
-            }
-        }
-    }
 }
