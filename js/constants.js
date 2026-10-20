@@ -112,3 +112,20 @@ const FEATURE_FILTER = true;
 Object.freeze(EXERCISE_TYPES);
 Object.freeze(SUBJECTS);
 Object.freeze(DIFFICULTIES);
+
+
+// Sidebar button
+const openBtn = document.getElementById("open-btn");
+const closeBtn = document.getElementById("close-btn");
+
+if (openBtn) {
+  openBtn.addEventListener("click", () => {
+    document.body.classList.add("sidebar-open");
+  });
+}
+
+const closeSidebar = () => {
+  document.body.classList.remove("sidebar-open");
+};
+
+closeBtn.addEventListener("click", closeSidebar);
