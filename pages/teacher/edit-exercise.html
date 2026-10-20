@@ -159,6 +159,21 @@
                                 placeholder="Paste the reading text here..."
                             ></textarea>
                         </div>
+                        <div
+                            class="form-group"
+                            id="video-group"
+                            style="display: none"
+                        >
+                            <label class="form-label" for="video"
+                                >Paste Video URL here (must use the link in
+                                share)</label
+                            >
+                            <input
+                                type="text"
+                                id="video"
+                                class="form-control"
+                            />
+                        </div>
 
                         <h3 class="mt-lg mb-md">Questions</h3>
                         <div id="questions-container"></div>
@@ -227,6 +242,14 @@
                                 ? "block"
                                 : "none";
                     });
+                document
+                    .getElementById("type")
+                    .addEventListener("change", (e) => {
+                        document.getElementById("video-group").style.display =
+                            e.target.value === EXERCISE_TYPE_VIDEO
+                                ? "block"
+                                : "none";
+                    });
                 function getQuestionMax(c) {
                     if (!c) {
                         questionMax++;
@@ -270,6 +293,10 @@
                                 <label class="form-label">Correct Answer *</label>
                                 <input type="text" class="form-control q-answer" required placeholder="Exact correct answer" value="${escapeHtml(q.correctAnswer)}">
                             </div>
+                            <div class="form-group">
+                                <label class="form-label">Explanation</label>
+                                <textarea class="form-control q-explain" rows="2" >${escapeHtml(q.explanation)}"</textarea>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -292,8 +319,11 @@
                 document.getElementById("points").value = ex.pointsPerQuestion;
                 document.getElementById("time-limit").value = ex.timeLimit;
                 document.getElementById("passage").value = ex.passage;
+                document.getElementById("video").value = ex.video;
                 document.getElementById("passage-group").style.display =
                     ex.type === EXERCISE_TYPE_READING ? "block" : "none";
+                document.getElementById("video-group").style.display =
+                    ex.type === EXERCISE_TYPE_VIDEO ? "block" : "none";
 
                 document
                     .getElementById("add-question-btn")
@@ -319,6 +349,9 @@
                             const answer = block
                                 .querySelector(".q-answer")
                                 .value.trim();
+                            const explain = block
+                                .querySelector(".q-explain")
+                                .value.trim();
                             const optionsRaw = block
                                 .querySelector(".q-options")
                                 .value.trim();
@@ -327,6 +360,7 @@
                                 text,
                                 type,
                                 correctAnswer: answer,
+                                explanation: explain,
                             };
                             if (type === "multiple_choice" && optionsRaw) {
                                 q.options = optionsRaw
@@ -363,6 +397,9 @@
                                 document
                                     .getElementById("passage")
                                     .value.trim() || null,
+                            video:
+                                document.getElementById("video").value.trim() ||
+                                null,
                             questions,
                             createdBy: user.id,
                             oid: ex.id,
