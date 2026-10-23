@@ -237,6 +237,7 @@
                 }
                 function addQuestion(q) {
                     questionCount++;
+                    q = q && q.id ? q : null;
                     const qMax = q
                         ? getQuestionMax(Number(q.id.split("_")[1]))
                         : getQuestionMax();
@@ -255,20 +256,20 @@
                             <div class="form-group">
                                 <label class="form-label">Type</label>
                                 <select class="form-control q-type">
-                                    <option value="multiple_choice" ${q.type == "multiple_choice" ? "selected" : ""} >Multiple Choice</option>
-                                    <option value="true_false" ${q.type == "true_false" ? "selected" : ""} >True / False</option>
-                                    <option value="fill_blank" ${q.type == "fill_blank" ? "selected" : ""} >Fill in the Blank</option>
+                                    <option value="multiple_choice" ${q && q.type == "multiple_choice" ? "selected" : ""} >Multiple Choice</option>
+                                    <option value="true_false" ${q && q.type == "true_false" ? "selected" : ""} >True / False</option>
+                                    <option value="fill_blank" ${q && q.type == "fill_blank" ? "selected" : ""} >Fill in the Blank</option>
                                 </select>
                             </div>
                             <div class="q-options-area">
                                 <div class="form-group">
                                     <label class="form-label">Options (one per line, for MCQ)</label>
-                                    <textarea class="form-control q-options" rows="3" placeholder="Option A&#10;Option B&#10;Option C&#10;Option D">${(q.options || []).map((o) => escapeHtml(o)).join("\n")}</textarea>
+                                    <textarea class="form-control q-options" rows="3" placeholder="Option A&#10;Option B&#10;Option C&#10;Option D">${q ? (q.options || []).map((o) => escapeHtml(o)).join("\n") : ""}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Correct Answer *</label>
-                                <input type="text" class="form-control q-answer" required placeholder="Exact correct answer" value="${escapeHtml(q.correctAnswer)}">
+                                <input type="text" class="form-control q-answer" required placeholder="Exact correct answer" value="${q ? escapeHtml(q.correctAnswer) : ""}">
                             </div>
                         </div>
                     </div>
